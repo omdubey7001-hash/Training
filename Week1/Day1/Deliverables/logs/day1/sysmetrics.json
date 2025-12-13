@@ -1,0 +1,66 @@
+[
+  {
+    "timestamp": "2025-12-02T09:12:00.929Z",
+    "cpuUsage": {
+      "user": 173888,
+      "system": 24123
+    },
+    "resourceUsage": {}
+  },
+  {
+    "timestamp": "2025-12-02T09:12:10.938Z",
+    "cpuUsage": {
+      "user": 188489,
+      "system": 25065
+    },
+    "resourceUsage": {}
+  },
+  {
+    "timestamp": "2025-12-02T09:12:20.949Z",
+    "cpuUsage": {
+      "user": 189099,
+      "system": 26152
+    },
+    "resourceUsage": {}
+  },
+  {
+    "timestamp": "2025-12-02T09:12:30.950Z",
+    "cpuUsage": {
+      "user": 190772,
+      "system": 26159
+    },
+    "resourceUsage": {}
+  },
+  {
+    "timestamp": "2025-12-02T09:12:40.960Z",
+    "cpuUsage": {
+      "user": 192228,
+      "system": 27173
+    },
+    "resourceUsage": {}
+  },
+  {
+    "timestamp": "2025-12-02T09:12:50.970Z",
+    "cpuUsage": {
+      "user": 194405,
+      "system": 27196
+    },
+    "resourceUsage": {}
+  },
+  {
+    "timestamp": "2025-12-02T09:13:00.981Z",
+    "cpuUsage": {
+      "user": 195107,
+      "system": 28264
+    },
+    "resourceUsage": {}
+  },
+  {
+    "timestamp": "2025-12-02T09:13:10.991Z",
+    "cpuUsage": {
+      "user": 195939,
+      "system": 29289
+    },
+    "resourceUsage": {}
+  }
+]

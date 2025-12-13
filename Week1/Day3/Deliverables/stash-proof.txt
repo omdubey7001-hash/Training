@@ -1,0 +1,28 @@
+# Stash Proof for Task: Use stash while switching branches + restore cleanly
+
+## Step 1 — Made temporary changes
+echo 'console.log("Temporary feature work");' >> app.js
+
+## Step 2 — Saw the modified file
+git status
+
+## Step 3 — Saved the work using stash
+git stash push -m "temporary feature work"
+
+## Step 4 — Switched branches
+git checkout master
+
+## Step 5 — Returned to original branch
+git checkout release/v0.1
+
+## Step 6 — Restored file using stash
+git restore app.js
+git stash apply stash@{0}
+
+## Step 7 — Committed restored changes
+git add app.js
+git commit -m "Restore temporary feature work after switching branches"
+
+## Step 8 — Verified everything
+git log --oneline
+git stash list

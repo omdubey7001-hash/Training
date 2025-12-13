@@ -1,0 +1,13 @@
+body {
+  font-family: Arial;
+  max-width: 500px;
+  margin: 50px auto;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+  margin: 5px 0;
+  background: #f1f1f1;
+}

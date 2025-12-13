@@ -1,0 +1,234 @@
+{
+	"info": {
+		"_postman_id": "7c702e90-8b8c-40eb-ab37-ae65bbbb7744",
+		"name": "GitHub Forensics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "50574663",
+		"_collection_link": "https://omdubey7001-2253235.postman.co/workspace/5c3c75e1-ffda-4fd6-8e7e-7840e05b1c76/collection/50574663-7c702e90-8b8c-40eb-ab37-ae65bbbb7744?action=share&source=collection_link&creator=50574663"
+	},
+	"item": [
+		{
+			"name": "Get user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Has ETag header\", function () {",
+							"  pm.response.to.have.header(\"ETag\");",
+							"});",
+							"pm.test(\"Has Rate limit header\", function () {",
+							"  pm.expect(pm.response.headers.get(\"x-ratelimit-remaining\")).to.not.be.undefined;",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/users/octoca",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"users",
+						"octoca"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Page1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is array\", () => {",
+							"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Max 5 repos\", () => {",
+							"    pm.expect(pm.response.json().length).to.be.at.most(5);",
+							"});",
+							"",
+							"pm.test(\"Check Link header (if exists)\", () => {",
+							"    pm.expect(pm.response.headers.has(\"Link\")).to.be.a(\"boolean\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/users/octocat/repos?page=1&per_page=5\n",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"users",
+						"octocat",
+						"repos"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "per_page",
+							"value": "5\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Page2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is array\", () => {",
+							"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Max 5 repos\", () => {",
+							"    pm.expect(pm.response.json().length).to.be.at.most(5);",
+							"});",
+							"",
+							"pm.test(\"Check Link header (if exists)\", () => {",
+							"    pm.expect(pm.response.headers.has(\"Link\")).to.be.a(\"boolean\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/users/octocat/repos?page=2&per_page=5\n",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"users",
+						"octocat",
+						"repos"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						},
+						{
+							"key": "per_page",
+							"value": "5\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Page3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is array\", () => {",
+							"    pm.expect(pm.response.json()).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"Max 5 repos\", () => {",
+							"    pm.expect(pm.response.json().length).to.be.at.most(5);",
+							"});",
+							"",
+							"pm.test(\"Check Link header (if exists)\", () => {",
+							"    pm.expect(pm.response.headers.has(\"Link\")).to.be.a(\"boolean\");",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.github.com/users/octocat/repos?page=3&per_page=5\n",
+					"protocol": "https",
+					"host": [
+						"api",
+						"github",
+						"com"
+					],
+					"path": [
+						"users",
+						"octocat",
+						"repos"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "3"
+						},
+						{
+							"key": "per_page",
+							"value": "5\n"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

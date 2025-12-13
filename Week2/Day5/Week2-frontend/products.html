@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <h2>Products</h2>
+    <input type="text" id="search" placeholder="Search products...">
+    <select id="sort">
+      <option value="">Sort</option>
+      <option value="low">Low → High</option>
+      <option value="high">High → Low</option>
+    </select>
+  </nav>
+
+  <div id="product-container" class="product-grid"></div>
+
+  <!-- IMPORTANT: Place script just before body ends -->
+  <script src="script.js"></script>
+</body>
+</html>
