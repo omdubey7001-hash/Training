@@ -34,10 +34,13 @@ Uses CSS Grid to automatically resize for mobile, tablet, and desktop.
 ## 📁 Folder Structure
 
 week2-frontend/
-│
+
 ├── index.html
+
 ├── products.html
+
 ├── style.css
+
 └── script.js
 
 ---
