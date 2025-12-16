@@ -23,8 +23,6 @@ All other UI elements are kept **simple and plain** on purpose.
 
 ## 📁 Project Folder Structure
 
-## 📁 Project Folder Structure
-
 ```bash
 day1/
 │
