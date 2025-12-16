@@ -23,21 +23,25 @@ All other UI elements are kept **simple and plain** on purpose.
 
 ## 📁 Project Folder Structure
 
+## 📁 Project Folder Structure
+
+```bash
 day1/
 │
 ├── app/
-│ ├── layout.js # Root layout (Navbar + Sidebar)
-│ ├── page.js # Main page content
-│ ├── globals.css # Global styles + Tailwind imports
+│   ├── layout.js        # Root layout (Navbar + Sidebar)
+│   ├── page.js          # Main page content
+│   ├── globals.css      # Global styles + Tailwind imports
 │
 ├── components/
-│ ├── Navbar.jsx # Top navigation bar
-│ ├── Sidebar.jsx # Left sidebar menu
+│   ├── Navbar.jsx       # Top navigation bar
+│   ├── Sidebar.jsx      # Left sidebar menu
 │
-├── postcss.config.js # PostCSS configuration
-├── tailwind.config.js # Tailwind configuration
+├── postcss.config.js    # PostCSS configuration
+├── tailwind.config.js  # Tailwind configuration
 ├── package.json
 └── README.md
+```
 
 
 ---
