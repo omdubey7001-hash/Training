@@ -31,9 +31,15 @@ day1/
 │   ├── page.js          # Main page content
 │   ├── globals.css      # Global styles + Tailwind imports
 │
-├── components/
+├── components/ui
 │   ├── Navbar.jsx       # Top navigation bar
 │   ├── Sidebar.jsx      # Left sidebar menu
+│   ├── Model.jsx 
+│   ├── Input.jsx 
+│   ├── Card.jsx 
+│   ├── Badge.jsx 
+│   ├── Button.jsx 
+    
 │
 ├── postcss.config.js    # PostCSS configuration
 ├── tailwind.config.js  # Tailwind configuration
@@ -155,6 +161,10 @@ http://localhost:3000
 
 ![Given image](./images/GivenUI.png)
 
-### The UI that is created by my(NavBar + SideBar)
+### The UI that is created by my(NavBar + SideBar) Day1
 
 ![Given image](./images/MyUI.png)
+
+### The UI that is created by my(all components) Day2
+
+![Given image](./images/Day2.png)

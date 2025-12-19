@@ -1,6 +1,6 @@
 import "./globals.css";
-import Navbar from "../components/ui/Navbar";
-import Sidebar from "../components/ui/Sidebar";
+import Navbar from "../app/components/ui/Navbar";
+import Sidebar from "../app/components/ui/Sidebar";
 
 export default function RootLayout({ children }) {
   return (
@@ -8,7 +8,6 @@ export default function RootLayout({ children }) {
       <body className="bg-gray-100">
         {/* Top Navbar */}
         <Navbar />
-
         {/* Sidebar + Main Content */}
         <div className="flex">
           <Sidebar />
