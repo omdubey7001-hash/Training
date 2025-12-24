@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Sidebar from "./components/ui/Sidebar";
-import Navbar from "./components/ui/Navbar";
+import Sidebar from "../components/ui/Sidebar";
+import Navbar from "../components/ui/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,10 +26,7 @@ export default function RootLayout({
              <Sidebar />
           </div>
 
-          {/* Main Content: 
-              Added 'ml-72' (margin-left) to push everything to the right. 
-              The value 72 is slightly larger than the sidebar width (64) for spacing.
-          */}
+          {}
           <main className="flex-1 ml-72 p-4 transition-all duration-300">
             <Navbar pageTitle="Tables" />
             
