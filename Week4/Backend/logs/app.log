@@ -1,45 +1,20 @@
-{"level":"info","message":"Database connected","timestamp":"2025-12-29T09:27:14.470Z"}
-{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-29T09:27:14.475Z"}
-{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-29T09:27:14.475Z"}
-{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-29T09:27:14.478Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:29:44.650Z"}
-{"level":"info","message":"Database connected","timestamp":"2025-12-29T09:29:46.114Z"}
-{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-29T09:29:46.118Z"}
-{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-29T09:29:46.118Z"}
-{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-29T09:29:46.121Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:01.112Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:03.591Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:08.919Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:11.646Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:12.055Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:12.331Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:12.574Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:12.762Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:12.947Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:13.116Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:13.292Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:13.466Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:13.640Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:14.098Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:14.389Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:14.603Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:14.794Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:14.971Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:15.147Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:15.326Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:15.508Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:15.687Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:15.870Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:16.036Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T09:30:16.202Z"}
-{"level":"info","message":"Server closed","timestamp":"2025-12-29T09:30:41.809Z"}
-{"level":"info","message":"Database connected","timestamp":"2025-12-29T10:08:57.570Z"}
-{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-29T10:08:57.574Z"}
-{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-29T10:08:57.575Z"}
-{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-29T10:08:57.577Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T10:13:29.064Z"}
-{"level":"info","message":"Database connected","timestamp":"2025-12-29T10:55:59.757Z"}
-{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-29T10:55:59.761Z"}
-{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-29T10:55:59.762Z"}
-{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-29T10:55:59.764Z"}
-{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T11:29:03.890Z"}
+{"level":"info","message":"Database connected","timestamp":"2025-12-29T13:24:56.651Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-29T13:24:56.655Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-29T13:24:56.656Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-29T13:24:56.658Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T13:25:04.644Z"}
+{"level":"info","message":"Database connected","timestamp":"2025-12-29T13:52:11.355Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-29T13:52:11.362Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-29T13:52:11.364Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-29T13:52:11.369Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2025-12-29T13:56:18.303Z"}
+{"level":"info","message":"Database connected","timestamp":"2025-12-30T09:16:22.493Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-30T09:16:22.499Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-30T09:16:22.500Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-30T09:16:22.504Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2025-12-30T09:23:45.066Z"}
+{"level":"info","message":"Database connected","timestamp":"2025-12-30T09:24:00.620Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2025-12-30T09:24:00.624Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-30T09:24:00.625Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2025-12-30T09:24:00.628Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2025-12-30T09:24:45.684Z"}
