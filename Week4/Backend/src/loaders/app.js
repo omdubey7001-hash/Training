@@ -1,5 +1,7 @@
 import express from "express";
 import logger from "../utils/logger.js";
+import productRoutes from "../routes/product.routes.js";
+import errorMiddleware from "../middlewares/error.middleware.js";
 
 export default function createApp() {
   const app = express();
@@ -9,7 +11,8 @@ export default function createApp() {
 
   logger.info("Middlewares loaded");
 
-
+  app.use("/api", productRoutes);
+  app.use(errorMiddleware);
   let routeCount = 0;
 
   const router = express.Router();
