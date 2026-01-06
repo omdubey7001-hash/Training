@@ -1,4 +1,4 @@
-- # Deployment Notes — Week 4 Backend
+# Deployment Notes — Week 4 Backend
 
 This document explains how to run, verify, and manage the Week 4 Backend
 application.  
@@ -31,7 +31,7 @@ Required variables:
 - `DATABASE_URL`
 
 Example MongoDB URL:
-- mongodb://localhost:27017/week4_backend
+- `mongodb://localhost:27017/week4_backend`
 
 Environment files are local-only and must not be committed to Git.
 
