@@ -20,8 +20,10 @@ if (!envFile) {
 const envPath = path.resolve(process.cwd(), envFile);
 
 
-if (!fs.existsSync(envPath)) {
-  throw new Error(`Environment file not found: ${envFile}`);
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+} else {
+  console.warn(`[config] ${envFile} not found, using process.env`);
 }
 
 

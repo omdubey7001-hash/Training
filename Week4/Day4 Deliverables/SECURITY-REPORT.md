@@ -63,7 +63,7 @@ The following security layers were added to the application:
 
 Input
 
-```
+```json
 {
   "name": { "$gt": "" },
   "price": 100
@@ -87,7 +87,7 @@ Input
 ### Test Case: Script Injection
 
 **Input**
-```
+```json
 {
   "name": "<script>alert('xss')</script>",
   "price": 100
@@ -208,3 +208,6 @@ The application is now protected against:
 - Excessive request abuse
 
 - Oversized payload attacks
+
+
+
