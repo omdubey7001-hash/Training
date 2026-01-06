@@ -1,220 +1,203 @@
-# ASYNC JOBS & OBSERVABILITY — Day 5  
-**Week 4: Backend Engineering**
+# Deployment Notes — Week 4 Backend
+
+This document explains how to run, verify, and manage the Week 4 Backend
+application.  
+The instructions reflect the actual setup used during development and testing.
 
 ---
 
-## 1. Overview
+## 1. Prerequisites
 
-This document explains how asynchronous jobs, queues, workers, and observability
-are implemented in the backend system.
+Before running the application, ensure the following are installed:
 
-The goal of Day-5 is to ensure that **heavy or slow operations do not block API responses**
-and that the system can be **observed, monitored, and debugged in production**.
-
----
-
-## 2. Why Asynchronous Jobs Are Required
-
-In a synchronous system:
-
-Client → API → Heavy Work → Response (slow)
-
-This causes:
-- Slow API responses
-- Poor user experience
-- Request timeouts under load
+- Node.js (v18 or higher)
+- MongoDB (running locally or accessible via URI)
+- npm (Node Package Manager)
+- PM2 (used for process management)
 
 ---
 
-With asynchronous jobs:
+## 2. Environment Configuration
 
-Client → API → Job Queued → Response (fast)  
-                             ↓  
-                       Worker processes job
+The application is configured using environment variables.
 
-This ensures:
-- APIs remain fast
-- Heavy work runs in background
-- System scales better
+Environment variables can be provided in two ways:
+- Through environment files (e.g. `.env.local`)
+- Directly via PM2 ecosystem configuration
 
----
+Required variables:
+- `NODE_ENV`
+- `PORT`
+- `DATABASE_URL`
 
-## 3. Use Cases for Async Jobs
+Example MongoDB URL:
+- # Deployment Notes — Week 4 Backend
 
-Asynchronous jobs are used for:
-- Email sending
-- Notifications
-- Background processing
-- Logging and analytics
-- Order or product post-processing
-
-In this system, async jobs are triggered when a **product is created**.
+This document explains how to run, verify, and manage the Week 4 Backend
+application.  
+The instructions reflect the actual setup used during development and testing.
 
 ---
 
-## 4. Job Queue Architecture
+## 1. Prerequisites
 
-The system uses a **queue-based architecture**.
+Before running the application, ensure the following are installed:
 
-### Components
-- Queue: Stores pending jobs
-- Worker: Processes jobs one by one
-- Service Layer: Pushes jobs into the queue
-
----
-
-### Flow Diagram
-
-Client  
-↓  
-Controller  
-↓  
-Service (adds job to queue)  
-↓  
-Queue  
-↓  
-Worker (processes job asynchronously)
+- Node.js (v18 or higher)
+- MongoDB (running locally or accessible via URI)
+- npm (Node Package Manager)
+- PM2 (used for process management)
 
 ---
 
-## 5. Queue Implementation
+## 2. Environment Configuration
 
-A queue is responsible for:
-- Holding jobs
-- Executing them in order
-- Preventing concurrent execution conflicts
+The application is configured using environment variables.
 
-Each job is added to the queue and processed independently of the API request lifecycle.
+Environment variables can be provided in two ways:
+- Through environment files (e.g. `.env.local`)
+- Directly via PM2 ecosystem configuration
 
-This ensures that API responses are **non-blocking**.
+Required variables:
+- `NODE_ENV`
+- `PORT`
+- `DATABASE_URL`
 
----
+Example MongoDB URL:
+- mongodb://localhost:27017/week4_backend
 
-## 6. Worker Implementation
-
-A worker is responsible for:
-- Receiving job data
-- Performing heavy or slow tasks
-- Logging success or failure
-
-In this system, the worker:
-- Simulates a heavy task using delay
-- Logs when product processing is completed
-
-Workers do not return responses to clients.
+Environment files are local-only and must not be committed to Git.
 
 ---
 
-## 7. Non-Blocking API Behavior
+## 3. Installing Dependencies
 
-When a product is created:
-- The product is saved in the database
-- An async job is added to the queue
-- The API responds immediately
+From the Backend project root, install dependencies:
 
-The client does **not wait** for the worker to finish.
+```bash
+npm install
+```
 
-This confirms:
-- Correct async behavior
-- Proper separation of concerns
+This installs all runtime and development dependencies required
+to start the server and background workers.
 
----
+## 4. Running the Application (Local)
 
-## 8. Observability
+To start the application without PM2:
+```
+NODE_ENV=local node src/index.js
+```
 
-Observability answers the question:
+- On successful startup, logs will confirm:
 
-> “What is my system doing right now?”
+      - Database connection
 
-It consists of:
-- Logs
-- Metrics
-- Health checks
+      - Middleware initialization
 
----
+      - Routes mounted
 
-## 9. Logging
+      - Server started on the configured port
 
-Logs are used to track:
-- Job creation
-- Job execution
-- Job completion
-- Job failure
+## 5. Running the Application with PM2
 
-Structured logs make debugging easier in production environments.
+The application can also be run using PM2 for process management.
 
-Logging ensures visibility into background processing.
+- A production-ready configuration is provided in:
 
----
+`     prod/ecosystem.config.cjs 
+`
 
-## 10. Metrics
+- To start the application:
+```
+      cd prod
+      pm2 start ecosystem.config.cjs
+```
 
-Metrics provide numerical insights into system behavior.
+To apply environment changes:
+```
+      pm2 restart week4-backend --update-env
+```
 
-Tracked metrics include:
-- Total jobs added
-- Completed jobs
-- Failed jobs
+- To check status:
 
-Metrics are stored in memory and reset on server restart.
+      `pm2 status`
 
-They help answer:
-- How many jobs ran?
-- How many failed?
-- Is the system healthy?
+## 6. Health Check
 
----
+The application exposes a health endpoint:
 
-## 11. Health Endpoint
+`GET /api/health`
 
-A health endpoint is exposed to monitor system status.
 
-The endpoint returns:
-- Server uptime
-- Memory usage
-- Job metrics
+- This endpoint returns:
 
-This endpoint is used by:
-- Developers
-- Monitoring tools
-- Deployment systems
+      Application status
 
----
+      Uptime
 
-## 12. Failure Handling
+      Memory usage
 
-If a job fails:
-- The error is logged
-- Failure metrics are updated
-- The API remains unaffected
+      Background job metrics
 
-This ensures:
-- Fault isolation
-- System stability
-- Safe error handling
+It is used to verify that the system is running correctly.
 
----
+## 7. Background Jobs
 
-## 13. Benefits of This Design
+Background jobs are executed asynchronously.
 
-This async job architecture provides:
-- Fast API responses
-- Background task processing
-- Better scalability
-- Production-grade observability
-- Easier debugging and monitoring
 
----
+Key points:
 
-## 14. Conclusion
+      Jobs do not block API responses
 
-Day-5 completes the backend system by introducing:
-- Asynchronous processing
-- Job queues and workers
-- Observability through logs, metrics, and health checks
+      Retry and backoff logic is implemented
 
-The backend is now:
-- Non-blocking
-- Scalable
-- Observable
-- Production-ready
+      Job execution is logged for observability
+
+This ensures better performance and fault tolerance.
+
+## 8. Logging and Observability
+
+Logging is implemented using Winston.
+
+Logs are written to:
+
+`logs/app.log`
+
+
+Logs include:
+
+      Server lifecycle events
+
+      API activity
+
+      Background job execution
+
+      Error details
+
+PM2 also maintains separate stdout and error logs.
+
+Old logs may remain after restarts and can be cleared using:
+
+`pm2 flush`
+
+## 9. Shutdown
+
+To stop the application:
+
+- Without PM2: press Ctrl + C
+
+- With PM2:
+
+`pm2 stop week4-backend`
+
+
+This performs a graceful shutdown of the server.
+
+## 10. Notes
+
+      Metrics are stored in memory and reset on restart
+
+      Environment validation ensures required configuration is present
+
+      Logs and health endpoints provide observability
