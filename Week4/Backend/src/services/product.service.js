@@ -1,8 +1,24 @@
 import ProductRepository from "../repositories/product.repository.js";
+import jobQueue from "../queues/job.queue.js";
+import { productCreatedWorker } from "../workers/product.worker.js";
 
 class ProductService {
+
   async createProduct(data) {
-    return ProductRepository.create(data);
+    // 1️⃣ Create product
+    const product = await ProductRepository.create(data);
+
+    // 2️⃣ Add async job (THIS updates metrics)
+    jobQueue.add(
+      () => productCreatedWorker(product),
+      {
+        attempts: 3,
+        backoff: 2000
+      }
+    );
+
+    // 3️⃣ Return immediately
+    return product;
   }
 
   async getProductById(id) {

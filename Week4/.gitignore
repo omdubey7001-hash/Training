@@ -1,0 +1,36 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.dev
+.env.prod
+
+# Logs
+logs/
+*.log
+
+# PM2
+pids/
+*.pid
+*.seed
+*.log
+
+# Coverage
+coverage/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+
+# Build output
+dist/
+build/
+
+# Redis dump (if used)
+dump.rdb

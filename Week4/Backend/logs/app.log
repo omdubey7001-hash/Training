@@ -107,3 +107,77 @@
 {"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2025-12-31T14:19:37.436Z"}
 {"level":"info","message":"Server started on port 3000","timestamp":"2025-12-31T14:19:37.439Z"}
 {"level":"info","message":"Shutting down server...","timestamp":"2025-12-31T14:39:38.114Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-02T13:56:49.553Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-02T13:56:57.919Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-02T13:58:08.110Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-02T13:58:08.112Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-02T13:58:08.113Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-02T13:58:08.115Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-02T13:58:11.805Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-02T13:58:13.663Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-02T13:58:13.665Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-02T13:58:13.667Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-02T13:58:13.668Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-02T14:03:58.226Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-02T14:03:59.774Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-02T14:03:59.776Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-02T14:03:59.777Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-02T14:03:59.779Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-05T13:49:47.878Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-05T13:49:47.881Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-05T13:49:47.884Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-05T13:49:47.887Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-05T13:56:58.172Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-05T13:57:00.006Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-05T13:57:00.008Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-05T13:57:00.010Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-05T13:57:00.011Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-05T14:03:42.667Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-05T14:03:43.716Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-05T14:03:43.718Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-05T14:03:43.720Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-05T14:03:43.721Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-05T14:04:44.335Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-05T14:04:45.471Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-05T14:04:45.473Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-05T14:04:45.474Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-05T14:04:45.476Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-01-05T14:05:05.970Z"}
+{"level":"info","message":"Job started","timestamp":"2026-01-05T14:05:05.970Z"}
+{"level":"info","message":"Job completed","timestamp":"2026-01-05T14:05:07.972Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-05T14:08:44.674Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-05T14:08:57.464Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-05T14:08:57.468Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-05T14:08:57.470Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-05T14:08:57.473Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-05T14:09:20.789Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-05T14:09:22.098Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-05T14:09:22.100Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-05T14:09:22.102Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-05T14:09:22.103Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-06T06:05:15.467Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-06T07:05:23.326Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-06T07:05:23.327Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-06T07:05:23.329Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-06T07:05:23.330Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-06T07:33:28.107Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-06T08:51:08.143Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-06T08:51:08.145Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-06T08:51:08.147Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-06T08:51:08.148Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-06T09:02:30.018Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-06T09:05:41.304Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-06T09:05:41.306Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-06T09:05:41.308Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-06T09:05:41.309Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-01-06T09:07:52.014Z","totalJobs":1}
+{"attempt":1,"level":"info","message":"Job attempt started","timestamp":"2026-01-06T09:07:52.015Z"}
+{"level":"info","message":"Processing product job","productId":"695cd0e88fdbca2c86c14556","timestamp":"2026-01-06T09:07:52.015Z"}
+{"level":"info","message":"Product job completed","productName":"Log Test Product","timestamp":"2026-01-06T09:07:54.015Z"}
+{"completedJobs":1,"level":"info","message":"Job completed","timestamp":"2026-01-06T09:07:54.015Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-01-06T09:09:14.982Z","totalJobs":2}
+{"attempt":1,"level":"info","message":"Job attempt started","timestamp":"2026-01-06T09:09:14.982Z"}
+{"level":"info","message":"Processing product job","productId":"695cd13a8fdbca2c86c14558","timestamp":"2026-01-06T09:09:14.982Z"}
+{"level":"info","message":"Product job completed","productName":"Metrics Test Product","timestamp":"2026-01-06T09:09:16.983Z"}
+{"completedJobs":2,"level":"info","message":"Job completed","timestamp":"2026-01-06T09:09:16.984Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-06T09:27:46.642Z"}
