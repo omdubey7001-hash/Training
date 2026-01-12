@@ -31,40 +31,7 @@ Required variables:
 - `DATABASE_URL`
 
 Example MongoDB URL:
-- # Deployment Notes — Week 4 Backend
-
-This document explains how to run, verify, and manage the Week 4 Backend
-application.  
-The instructions reflect the actual setup used during development and testing.
-
----
-
-## 1. Prerequisites
-
-Before running the application, ensure the following are installed:
-
-- Node.js (v18 or higher)
-- MongoDB (running locally or accessible via URI)
-- npm (Node Package Manager)
-- PM2 (used for process management)
-
----
-
-## 2. Environment Configuration
-
-The application is configured using environment variables.
-
-Environment variables can be provided in two ways:
-- Through environment files (e.g. `.env.local`)
-- Directly via PM2 ecosystem configuration
-
-Required variables:
-- `NODE_ENV`
-- `PORT`
-- `DATABASE_URL`
-
-Example MongoDB URL:
-- mongodb://localhost:27017/week4_backend
+- `mongodb://localhost:27017/week4_backend`
 
 Environment files are local-only and must not be committed to Git.
 
