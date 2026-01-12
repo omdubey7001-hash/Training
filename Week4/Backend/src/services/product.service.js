@@ -5,10 +5,10 @@ import { productCreatedWorker } from "../workers/product.worker.js";
 class ProductService {
 
   async createProduct(data) {
-    // 1️⃣ Create product
+
     const product = await ProductRepository.create(data);
 
-    // 2️⃣ Add async job (THIS updates metrics)
+
     jobQueue.add(
       () => productCreatedWorker(product),
       {
@@ -17,7 +17,7 @@ class ProductService {
       }
     );
 
-    // 3️⃣ Return immediately
+
     return product;
   }
 

@@ -2,7 +2,6 @@ import logger from "../utils/logger.js";
 
 export const sendEmailJob = async ({ to, subject }) => {
   try {
-    // Simulate email delay
     await new Promise(resolve => setTimeout(resolve, 1500));
 
     logger.info("Email sent successfully", {
