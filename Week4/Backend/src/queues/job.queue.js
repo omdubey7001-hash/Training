@@ -15,7 +15,6 @@ class JobQueue {
       currentAttempt: 0
     };
 
-    // ✅ METRIC: job added
     jobMetrics.totalJobs++;
 
     logger.info("Job added to queue", {
@@ -41,7 +40,7 @@ class JobQueue {
 
         await job.handler();
 
-        // ✅ METRIC: job completed
+
         jobMetrics.completedJobs++;
 
         logger.info("Job completed", {
@@ -49,7 +48,6 @@ class JobQueue {
         });
 
       } catch (err) {
-        // ✅ METRIC: job failed
         jobMetrics.failedJobs++;
 
         logger.error("Job failed", {

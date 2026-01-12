@@ -4,6 +4,7 @@ import cors from "cors";
 import rateLimit from "express-rate-limit";
 
 export function applySecurity(app) {
+  
   // Secure HTTP headers
   app.use(helmet());
 
