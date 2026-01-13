@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day 5 Fullstack</title>
+</head>
+<body>
+  <h1>Frontend is running</h1>
+
+  <button onclick="callApi()">Call API</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function callApi() {
+      const res = await fetch("/api");
+      const data = await res.json();
+      document.getElementById("output").innerText =
+        JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
