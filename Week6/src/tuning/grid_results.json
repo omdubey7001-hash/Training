@@ -1,0 +1,10 @@
+{
+    "best_params": {
+        "max_depth": 20,
+        "min_samples_split": 5,
+        "n_estimators": 100
+    },
+    "cv_rmse": 55.09670916680129,
+    "test_rmse": 44.43493775200121,
+    "test_r2": 0.8860908268898224
+}

@@ -1,0 +1,12 @@
+{
+    "best_cv_rmse": 50.6019077672834,
+    "test_rmse": 45.84020727512303,
+    "test_r2": 0.8787720691889901,
+    "best_params": {
+        "n_estimators": 235,
+        "max_depth": 28,
+        "min_samples_split": 3,
+        "min_samples_leaf": 3,
+        "max_features": "sqrt"
+    }
+}
