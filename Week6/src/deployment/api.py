@@ -1,129 +1,91 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, validator
-import joblib
-import json
+from pydantic import BaseModel
 import pandas as pd
-from datetime import datetime
+import joblib
 import uuid
+from datetime import datetime
 import os
-from typing import Optional, Dict
 
-# -------------------------
-# App initialization
-# -------------------------
-app = FastAPI(title="ML Model API")
+# ---------------- CONFIG ----------------
+MODEL_VERSION = os.getenv("MODEL_VERSION", "v1")
 
-# -------------------------
-# Paths
-# -------------------------
-MODEL_DIR = "src/models/versions"
-FEATURE_LIST_PATH = "src/features/feature_list.json"
-LOG_FILE = "src/logs/prediction_logs.csv"
+MODEL_PATH = "models/tuned_model.pkl"
+PREPROCESSOR_PATH = "models/preprocessor.pkl"
+LOG_PATH = "logs/prediction_logs.csv"
 
-# -------------------------
-# Load feature list
-# -------------------------
-with open(FEATURE_LIST_PATH) as f:
-    FEATURES = json.load(f)
+# ---------------- LOAD ARTIFACTS ----------------
+model = joblib.load(MODEL_PATH)
+preprocessor = joblib.load(PREPROCESSOR_PATH)
 
-# -------------------------
-# Utility: Load model by version
-# -------------------------
-def load_model(version: Optional[str] = None):
-    if version:
-        model_path = f"{MODEL_DIR}/model_{version}.pkl"
-        if not os.path.exists(model_path):
-            raise ValueError(f"Model version {version} not found")
-    else:
-        versions = sorted(os.listdir(MODEL_DIR))
-        model_path = os.path.join(MODEL_DIR, versions[-1])
+app = FastAPI(title="Credit Risk Prediction API")
 
-    return joblib.load(model_path), os.path.basename(model_path)
+# ---------------- INPUT SCHEMA ----------------
+class CreditInput(BaseModel):
+    checking_status: str
+    duration: int
+    credit_history: str
+    purpose: str
+    credit_amount: int
+    savings_status: str
+    employment: str
+    installment_commitment: int
+    personal_status: str
+    other_parties: str
+    residence_since: int
+    property_magnitude: str
+    age: int
+    other_payment_plans: str
+    housing: str
+    existing_credits: int
+    job: str
+    num_dependents: int
+    own_telephone: str
+    foreign_worker: str
 
-# -------------------------
-# Input schema (STRICT)
-# -------------------------
-class PredictionInput(BaseModel):
-    data: Dict[str, float]
-    model_version: Optional[str] = None
-
-    @validator("data")
-    def validate_data(cls, v):
-        # Missing features
-        missing = set(FEATURES) - set(v.keys())
-        if missing:
-            raise ValueError(f"Missing features: {missing}")
-
-        # Extra features
-        extra = set(v.keys()) - set(FEATURES)
-        if extra:
-            raise ValueError(f"Unexpected features: {extra}")
-
-        # Value checks
-        for key, value in v.items():
-            if value is None:
-                raise ValueError(f"Null value for feature: {key}")
-            if not isinstance(value, (int, float)):
-                raise ValueError(f"Non-numeric value for feature: {key}")
-
-        return v
-
-# -------------------------
-# Prediction logging
-# -------------------------
-def log_prediction(request_id, model_version, input_data, prediction):
-    os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)
-    log_exists = os.path.exists(LOG_FILE)
-
-    row = {
-        "timestamp": datetime.utcnow(),
-        "request_id": request_id,
-        "model_version": model_version,
-        "input": str(input_data),
-        "prediction": prediction
+# ---------------- ROUTES ----------------
+@app.get("/")
+def health():
+    return {
+        "status": "running",
+        "model_version": MODEL_VERSION
     }
 
-    pd.DataFrame([row]).to_csv(
-        LOG_FILE,
-        mode="a",
-        header=not log_exists,
-        index=False
-    )
-
-# -------------------------
-# Routes
-# -------------------------
-@app.get("/")
-def health_check():
-    return {"status": "API is running"}
-
 @app.post("/predict")
-def predict(request: PredictionInput):
+def predict(input_data: CreditInput):
     request_id = str(uuid.uuid4())
 
-    # Load model
-    try:
-        model, model_file = load_model(request.model_version)
-    except ValueError as e:
-        return {
-            "request_id": request_id,
-            "error": str(e)
-        }
+    # Convert input to DataFrame
+    df = pd.DataFrame([input_data.dict()])
 
-    # Predict
-    X = pd.DataFrame([request.data])[FEATURES]
-    prediction = model.predict(X)[0]
+    # 🔑 APPLY SAME PREPROCESSING AS TRAINING
+    X_processed = preprocessor.transform(df)
 
-    # Log
-    log_prediction(
-        request_id=request_id,
-        model_version=model_file,
-        input_data=request.data,
-        prediction=prediction
+    prediction = model.predict(X_processed)[0]
+    probability = model.predict_proba(X_processed)[0][1]
+
+    # Logging
+    log_row = {
+    "request_id": request_id,
+    "timestamp": datetime.utcnow().isoformat(),
+    "prediction": int(prediction),
+    "probability": float(probability),
+    "model_version": MODEL_VERSION,
+}
+
+    # 🔑 ADD RAW INPUT FEATURES FOR DRIFT
+    log_row.update(input_data.dict())
+
+
+    pd.DataFrame([log_row]).to_csv(
+        LOG_PATH,
+        mode="a",
+        header=not os.path.exists(LOG_PATH),
+        index=False
     )
 
     return {
         "request_id": request_id,
-        "model_version": model_file,
-        "prediction": prediction
+        "prediction": "good" if prediction == 1 else "bad",
+        "confidence": round(probability, 3),
+        "model_version": MODEL_VERSION
     }

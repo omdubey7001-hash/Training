@@ -1,0 +1,9 @@
+{
+    "best_f1_score": 0.8611696308162033,
+    "best_params": {
+        "n_estimators": 328,
+        "max_depth": 30,
+        "min_samples_split": 5,
+        "min_samples_leaf": 2
+    }
+}

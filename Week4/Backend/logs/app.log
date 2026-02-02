@@ -181,3 +181,8 @@
 {"level":"info","message":"Product job completed","productName":"Metrics Test Product","timestamp":"2026-01-06T09:09:16.983Z"}
 {"completedJobs":2,"level":"info","message":"Job completed","timestamp":"2026-01-06T09:09:16.984Z"}
 {"level":"info","message":"Shutting down server...","timestamp":"2026-01-06T09:27:46.642Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-01-27T18:36:55.873Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-01-27T18:36:55.874Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-27T18:36:55.876Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-01-27T18:36:55.877Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-01-27T18:37:04.492Z"}

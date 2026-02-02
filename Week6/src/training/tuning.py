@@ -1,84 +1,60 @@
-import pandas as pd
-import json
 import joblib
-import os
-import numpy as np
+import optuna
+import json
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import f1_score
+from sklearn.model_selection import StratifiedKFold, cross_val_score
 
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import mean_squared_error, r2_score
+# Load saved splits
+X_train = joblib.load("src/data/splits/X_train.pkl")
+y_train = joblib.load("src/data/splits/y_train.pkl").map({"bad": 0, "good": 1})
 
-# Paths
-FEATURE_PATH = "src/features/processed"
-FEATURE_LIST_PATH = "src/features/feature_list.json"
-OUTPUT_PATH = "src/tuning"
 
-os.makedirs(OUTPUT_PATH, exist_ok=True)
+RESULTS_PATH = "src/tuning/results.json"
+MODEL_PATH = "src/models/tuned_model.pkl"
 
-def tune_model():
-    print("Loading data...")
-
-    X_train = pd.read_csv(f"{FEATURE_PATH}/X_train.csv")
-    y_train = pd.read_csv(f"{FEATURE_PATH}/y_train.csv").values.ravel()
-
-    X_test = pd.read_csv(f"{FEATURE_PATH}/X_test.csv")
-    y_test = pd.read_csv(f"{FEATURE_PATH}/y_test.csv").values.ravel()
-
-    with open(FEATURE_LIST_PATH) as f:
-        features = json.load(f)
-
-    X_train = X_train[features]
-    X_test = X_test[features]
-
-    print("Starting hyperparameter tuning...")
-
-    param_grid = {
-        "n_estimators": [100, 200],
-        "max_depth": [None, 10, 20],
-        "min_samples_split": [2, 5]
+def objective(trial):
+    params = {
+        "n_estimators": trial.suggest_int("n_estimators", 100, 500),
+        "max_depth": trial.suggest_int("max_depth", 5, 30),
+        "min_samples_split": trial.suggest_int("min_samples_split", 2, 10),
+        "min_samples_leaf": trial.suggest_int("min_samples_leaf", 1, 5),
+        "random_state": 42,
+        "n_jobs": -1
     }
 
-    model = RandomForestRegressor(random_state=42, n_jobs=-1)
+    model = RandomForestClassifier(**params)
 
-    grid = GridSearchCV(
-        model,
-        param_grid,
-        cv=5,
-        scoring="neg_mean_squared_error",
-        n_jobs=-1
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    scores = cross_val_score(
+        model, X_train, y_train, cv=cv, scoring="f1"
     )
 
-    grid.fit(X_train, y_train)
+    return scores.mean()
 
-    best_model = grid.best_estimator_
+def main():
+    study = optuna.create_study(direction="maximize")
+    study.optimize(objective, n_trials=30)
 
-    print("Best parameters found:", grid.best_params_)
+    best_params = study.best_params
+    best_score = study.best_value
 
-    # -------------------------
-    # Evaluate best model
-    # -------------------------
-    y_pred = best_model.predict(X_test)
+    best_model = RandomForestClassifier(**best_params, random_state=42)
+    best_model.fit(X_train, y_train)
 
-    mse = mean_squared_error(y_test, y_pred)
-    rmse = np.sqrt(mse)
-    r2 = r2_score(y_test, y_pred)
+    joblib.dump(best_model, MODEL_PATH)
 
-    print(f"RMSE: {rmse}")
-    print(f"R2 Score: {r2}")
+    results = {
+        "best_f1_score": best_score,
+        "best_params": best_params
+    }
 
-    # Save model
-    joblib.dump(best_model, "src/models/best_model.pkl")
+    with open(RESULTS_PATH, "w") as f:
+        json.dump(results, f, indent=4)
 
-    # Save tuning results
-    with open(f"{OUTPUT_PATH}/grid_results.json", "w") as f:
-        json.dump({
-            "best_params": grid.best_params_,
-            "cv_rmse": (-grid.best_score_) ** 0.5,
-            "test_rmse": rmse,
-            "test_r2": r2
-        }, f, indent=4)
-
-    print("Tuning completed and best model saved.")
+    print("Hyperparameter tuning completed")
+    print("Best F1 Score:", best_score)
+    print("Best Parameters:", best_params)
 
 if __name__ == "__main__":
-    tune_model()
+    main()

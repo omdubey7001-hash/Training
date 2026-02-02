@@ -1,92 +1,95 @@
 import pandas as pd
+import numpy as np
+import json
+import joblib
 import os
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
 
-# ==============================
-# Paths
-# ==============================
 DATA_PATH = "src/data/processed/final.csv"
-OUTPUT_DIR = "src/features/processed"
+FEATURE_LIST_PATH = "src/features/feature_list.json"
 
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+TARGET_COL = "class"   
+
+SPLIT_PATH = "src/data/splits"
+os.makedirs(SPLIT_PATH, exist_ok=True)
 
 
-def build_features():
-    print("Loading clean data...")
+def load_data():
     df = pd.read_csv(DATA_PATH)
 
-    # ==============================
-    # 1. Separate target and inputs
-    # ==============================
-    print("Separating target and features...")
-    y = df["value"]                  # target variable
-    X = df.drop(columns=["value"])   # input features
+    # 🔑 FORCE string columns to object dtype (IMPORTANT)
+    for col in df.select_dtypes(include=["string"]):
+        df[col] = df[col].astype("object")
 
-    # ==============================
-    # 2. Identify column types
-    # ==============================
+    return df
+
+
+def split_data(df):
+    X = df.drop(columns=[TARGET_COL])
+    y = df[TARGET_COL]
+
+    return train_test_split(
+        X, y, test_size=0.2, random_state=42, stratify=y
+    )
+
+def build_pipeline(X):
     num_cols = X.select_dtypes(include=["int64", "float64"]).columns
-    cat_cols = X.select_dtypes(include=["object", "str"]).columns
+    cat_cols = X.select_dtypes(include=["object", "string"]).columns
 
-    # ==============================
-    # 3. Encode categorical features
-    # ==============================
-    print("Encoding categorical features...")
-    encoder = OneHotEncoder(
-        handle_unknown="ignore",
-        sparse_output=False   # IMPORTANT: new sklearn versions
-    )
+    numeric_pipeline = Pipeline([
+        ("scaler", StandardScaler())
+    ])
 
-    encoded_cat = encoder.fit_transform(X[cat_cols])
+    categorical_pipeline = Pipeline([
+        ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False))
+    ])
 
-    encoded_cat_df = pd.DataFrame(
-        encoded_cat,
-        columns=encoder.get_feature_names_out(cat_cols),
-        index=X.index
-    )
+    preprocessor = ColumnTransformer([
+        ("num", numeric_pipeline, num_cols),
+        ("cat", categorical_pipeline, cat_cols)
+    ])
 
-    # ==============================
-    # 4. Scale numerical features
-    # ==============================
-    print("Scaling numerical features...")
-    scaler = StandardScaler()
-    scaled_num = scaler.fit_transform(X[num_cols])
+    return preprocessor, num_cols, cat_cols
 
-    scaled_num_df = pd.DataFrame(
-        scaled_num,
-        columns=num_cols,
-        index=X.index
-    )
+def save_feature_list(num_cols, cat_cols):
+    feature_info = {
+        "numerical_features": list(num_cols),
+        "categorical_features": list(cat_cols)
+    }
 
-    # ==============================
-    # 5. Combine all features
-    # ==============================
-    print("Combining numerical and categorical features...")
-    X_final = pd.concat([scaled_num_df, encoded_cat_df], axis=1)
+    with open(FEATURE_LIST_PATH, "w") as f:
+        json.dump(feature_info, f, indent=4)
 
-    # ==============================
-    # 6. Train-test split
-    # ==============================
-    print("Splitting train and test data...")
-    X_train, X_test, y_train, y_test = train_test_split(
-        X_final,
-        y,
-        test_size=0.2,
-        random_state=42
-    )
+def main():
+    df = load_data()
+    X_train, X_test, y_train, y_test = split_data(df)
 
-    # ==============================
-    # 7. Save processed features
-    # ==============================
-    print("Saving processed feature files...")
-    X_train.to_csv(f"{OUTPUT_DIR}/X_train.csv", index=False)
-    X_test.to_csv(f"{OUTPUT_DIR}/X_test.csv", index=False)
-    y_train.to_csv(f"{OUTPUT_DIR}/y_train.csv", index=False)
-    y_test.to_csv(f"{OUTPUT_DIR}/y_test.csv", index=False)
+    preprocessor, num_cols, cat_cols = build_pipeline(X_train)
 
-    print("Feature building completed successfully.")
+    X_train_transformed = preprocessor.fit_transform(X_train)
+    X_test_transformed = preprocessor.transform(X_test)
 
+    # 🔑 SAVE PREPROCESSOR (THIS WAS MISSING)
+    joblib.dump(preprocessor, "src/models/preprocessor.pkl")
+
+
+    joblib.dump(X_train_transformed, f"{SPLIT_PATH}/X_train.pkl")
+    joblib.dump(X_test_transformed, f"{SPLIT_PATH}/X_test.pkl")
+    joblib.dump(y_train, f"{SPLIT_PATH}/y_train.pkl")
+    joblib.dump(y_test, f"{SPLIT_PATH}/y_test.pkl")
+
+    print("Train/Test splits saved")
+
+
+    save_feature_list(num_cols, cat_cols)
+
+    print("Feature engineering completed")
+    print("X_train shape:", X_train_transformed.shape)
+    print("X_test shape:", X_test_transformed.shape)
 
 if __name__ == "__main__":
-    build_features()
+    main()

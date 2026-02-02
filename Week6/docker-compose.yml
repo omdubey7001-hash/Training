@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: ./src
+      dockerfile: deployment/Dockerfile.api
+    container_name: credit-risk-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/app
+      - ./prediction_logs.csv:/app/prediction_logs.csv
+    environment:
+      - MODEL_VERSION=v1
+
+
+  frontend:
+    build:
+      context: ./src
+      dockerfile: frontend/Dockerfile.frontend
+    container_name: credit-risk-frontend
+    ports:
+      - "8501:8501"
+    depends_on:
+      - backend
+    volumes:
+      - ./src:/app

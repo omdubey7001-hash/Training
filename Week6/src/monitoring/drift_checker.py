@@ -1,27 +1,36 @@
 import pandas as pd
-import ast
+from scipy.stats import ks_2samp
 
-# Load RAW training data (before scaling)
-raw_train = pd.read_csv("src/data/raw/dataset.csv")
+REFERENCE_DATA = "src/data/processed/final.csv"
+CURRENT_DATA = "prediction_logs.csv"
 
-# Load prediction logs
-logs = pd.read_csv("src/logs/prediction_logs.csv")
+NUMERIC_FEATURES = [
+    "duration",
+    "credit_amount",
+    "installment_commitment",
+    "residence_since",
+    "age",
+    "existing_credits",
+    "num_dependents"
+]
 
-# Convert input string back to dict
-logs["input"] = logs["input"].apply(ast.literal_eval)
+def check_drift():
+    ref = pd.read_csv(REFERENCE_DATA)
+    cur = pd.read_csv(CURRENT_DATA)
 
-# Extract raw years
-train_years = raw_train["year"]
-log_years = logs["input"].apply(lambda x: x.get("year"))
+    print("\nDATA DRIFT REPORT\n")
 
-print("Training (RAW) year range:")
-print(train_years.min(), "to", train_years.max())
+    for col in NUMERIC_FEATURES:
+        if col not in cur.columns:
+            continue
 
-print("\nLogged prediction year range:")
-print(log_years.min(), "to", log_years.max())
+        stat, p_value = ks_2samp(ref[col], cur[col])
 
-# Correct drift check
-if log_years.min() < train_years.min() or log_years.max() > train_years.max():
-    print("\n WARNING: Year drift detected!")
-else:
-    print("\n No year drift detected.")
+        drift_status = "DRIFT" if p_value < 0.05 else "NO DRIFT"
+
+        print(
+            f"{col:25s} | KS p-value: {p_value:.4f} | {drift_status}"
+        )
+
+if __name__ == "__main__":
+    check_drift()

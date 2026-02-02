@@ -1,33 +1,26 @@
 import pandas as pd
-import json
-import os
+import numpy as np
+from sklearn.feature_selection import mutual_info_classif
 
-FEATURE_DATA_PATH = "src/features/processed"
-OUTPUT_PATH = "src/features"
+DATA_PATH = "src/data/processed/final.csv"
+TARGET_COL = "class"
 
 def select_features():
-    print("Loading feature data...")
-    X_train = pd.read_csv(f"{FEATURE_DATA_PATH}/X_train.csv")
-    y_train = pd.read_csv(f"{FEATURE_DATA_PATH}/y_train.csv")
+    df = pd.read_csv(DATA_PATH)
 
-    # Combine for correlation
-    df = pd.concat([X_train, y_train], axis=1)
+    X = df.drop(columns=[TARGET_COL])
+    y = df[TARGET_COL]
 
-    print("Calculating correlation with target...")
-    corr = df.corr()["value"].abs()
+    X_encoded = pd.get_dummies(X, drop_first=True)
 
-    # Threshold-based selection
-    selected_features = corr[corr > 0.05].index.tolist()
-    selected_features.remove("value")
+    mi_scores = mutual_info_classif(X_encoded, y, random_state=42)
+    mi_df = pd.DataFrame({
+        "feature": X_encoded.columns,
+        "importance": mi_scores
+    }).sort_values(by="importance", ascending=False)
 
-    print(f"Selected {len(selected_features)} features.")
-
-    # Save feature list
-    with open(f"{OUTPUT_PATH}/feature_list.json", "w") as f:
-        json.dump(selected_features, f, indent=4)
-
-    print("Feature list saved successfully.")
-
+    print("Top 10 Important Features:")
+    print(mi_df.head(10))
 
 if __name__ == "__main__":
     select_features()
