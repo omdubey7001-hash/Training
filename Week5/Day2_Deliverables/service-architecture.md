@@ -23,10 +23,7 @@ All services run in isolated containers and communicate via Docker networking.
 - Runs on port `5000`
 - Built from `./server`
 - Connects to MongoDB using internal Docker DNS
-- Mongo connection string:
-
-`mongodb://mongo:27017/appdb`
-
+- Mongo connection string:  `mongodb://mongo:27017/appdb`
 
 ### 3. MongoDB
 - Official MongoDB image
@@ -50,7 +47,6 @@ All services run in isolated containers and communicate via Docker networking.
 ## Logs
 - Logs are accessible using:
 `docker compose logs server`
-
 
 ---
 

@@ -1,5 +1,9 @@
 # Linux Inside Docker Container
 
+## Build images
+- `docker build -t day1-demo .` -> This command is used to create the docker image.
+- To run the container of the image that is generated from the Dockerfile `docker run -d --name day1_container -p 3000:3000 day1-demo`
+
 ## Process Management
 - `ps` shows running processes
 - PID 1 is Node app

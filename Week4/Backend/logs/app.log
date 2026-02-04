@@ -186,3 +186,8 @@
 {"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-01-27T18:36:55.876Z"}
 {"level":"info","message":"Server started on port 3000","timestamp":"2026-01-27T18:36:55.877Z"}
 {"level":"info","message":"Shutting down server...","timestamp":"2026-01-27T18:37:04.492Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-03T21:00:42.373Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-03T21:00:42.377Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-03T21:00:42.380Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-03T21:00:42.383Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-03T21:06:04.925Z"}
