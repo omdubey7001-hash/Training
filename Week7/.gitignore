@@ -1,2 +1,5 @@
 .venv
 data
+
+Week7/src/vectorstore/*.faiss
+
