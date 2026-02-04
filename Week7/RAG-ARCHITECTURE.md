@@ -147,6 +147,13 @@ Only the generator component is swapped via configuration.
 
 This ensures vendor independence and enterprise control.
 
+    The semantic retriever was validated using section-level queries.
+    Exact section headings such as "Risks Related to Legal and Regulatory Matters"
+    were retrieved with high similarity scores, demonstrating precise semantic matching.
+    This confirms the effectiveness of recursive chunking and embedding strategies
+    for enterprise-scale legal and financial documents.
+
+
 ## Current Status (Day 1)
 
 Implemented:

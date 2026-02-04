@@ -1,5 +1,5 @@
 .venv
 data
-
 Week7/src/vectorstore/*.faiss
 
+src/vectorstore/index_metadata.json
