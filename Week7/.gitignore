@@ -2,4 +2,4 @@
 data
 Week7/src/vectorstore/*.faiss
 
-src/vectorstore/index_metadata.json
+Week7/src/vectorstore/*.json
