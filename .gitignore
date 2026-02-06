@@ -121,3 +121,7 @@ dist
 
 venv
 (.venv)
+
+Week7/src/vectorstore/*.faiss
+
+Week7/src/vectorstore/*.json

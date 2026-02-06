@@ -110,11 +110,11 @@ if __name__ == "__main__":
 
     results = hr.search(q)
 
-    print("\n--- Reranked Final Results ---\n")
+    print("\n--- Final Context for LLM (After MMR) ---\n")
     for i, r in enumerate(results, 1):
         print(
-            f"{i}. {r['source']} \n | chunk {r['chunk_id']}\n "
-            f"| rerank_score {r['rerank_score']:.4f}\n"
-            f"| TEXT: {r['text'][:300]}...\n"
+            f"{i}. SOURCE: {r['source']}\n"
+            f"   CHUNK: {r['chunk_id']}\n"
+            f"   TEXT: {r['text'][:300]}...\n"
         )
 
