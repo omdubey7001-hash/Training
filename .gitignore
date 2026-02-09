@@ -121,6 +121,7 @@ dist
 
 venv
 (.venv)
+.venv
 
 Week7/src/vectorstore/*.faiss
 
