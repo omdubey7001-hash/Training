@@ -16,24 +16,6 @@ The goal is to build APIs that are **scalable**, **predictable**, and **safe und
 
 The application follows a strict layered architecture:
 
-# QUERY ENGINE DOCUMENTATION — Day 3  
-**Week 4: Backend Engineering**
-
----
-
-## 1. Overview
-
-This document explains how the Product API query engine is designed and how it handles
-filtering, searching, pagination, soft deletion, and error handling.
-
-The goal is to build APIs that are **scalable**, **predictable**, and **safe under failure**.
-
----
-
-## 2. Controller → Service → Repository Flow
-
-The application follows a strict layered architecture:
-
 Client → Controller → Service → Repository → Database
 
 

@@ -2,7 +2,7 @@ import pandas as pd
 from scipy.stats import ks_2samp
 
 REFERENCE_DATA = "src/data/processed/final.csv"
-CURRENT_DATA = "prediction_logs.csv"
+CURRENT_DATA = "logs/prediction_logs.csv"
 
 NUMERIC_FEATURES = [
     "duration",
@@ -20,6 +20,11 @@ def check_drift():
 
     print("\nDATA DRIFT REPORT\n")
 
+    if cur.shape[0] < 30:
+        print("Not enough live data to reliably detect drift")
+        print(f"Current samples: {cur.shape[0]}")
+        return
+
     for col in NUMERIC_FEATURES:
         if col not in cur.columns:
             continue
@@ -31,6 +36,7 @@ def check_drift():
         print(
             f"{col:25s} | KS p-value: {p_value:.4f} | {drift_status}"
         )
+
 
 if __name__ == "__main__":
     check_drift()

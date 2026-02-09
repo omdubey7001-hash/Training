@@ -259,3 +259,10 @@ What was done
 - Multiple public entry points
 
 - Editing containers manually
+
+
+## To stop
+
+`docker compose --profile dev down`
+
+`docker compose --profile prod down`
