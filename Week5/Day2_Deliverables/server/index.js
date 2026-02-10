@@ -1,32 +1,16 @@
-import express from "express";
-import mongoose from "mongoose";
+const express = require("express");
+const mongoose = require("mongoose");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
 
-
-async function connectDB() {
-  try {
-    await mongoose.connect(MONGO_URI);
-    console.log("MongoDB connected");
-  } catch (err) {
-    console.error("MongoDB connection failed:", err.message);
-    process.exit(1);
-  }
-}
-
-connectDB();
-
-app.use(express.json());
+mongoose.connect("mongodb://mongo:27017/testdb")
+  .then(() => console.log("Mongo connected"))
+  .catch(err => console.log(err));
 
 app.get("/", (req, res) => {
-  res.json({
-    status: "OK",
-    message: "Server is running",
-  });
+  res.send("Backend running 🚀");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(3000, () => {
+  console.log("Server on 3000");
 });

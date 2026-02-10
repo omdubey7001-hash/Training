@@ -24,13 +24,13 @@ class CLIPEmbedder:
                 pixel_values=pixel_values
             )
 
-        # ✅ GUARANTEED TENSOR EXTRACTION
+        # GUARANTEED TENSOR EXTRACTION
         if hasattr(outputs, "pooler_output"):
             image_features = outputs.pooler_output
         else:
             image_features = outputs  # already tensor
 
-        # ✅ SAFE NORMALIZATION
+        # SAFE NORMALIZATION
         image_features = image_features / image_features.norm(
             dim=-1, keepdim=True
         )

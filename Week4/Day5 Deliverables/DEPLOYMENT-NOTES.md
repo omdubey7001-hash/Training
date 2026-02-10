@@ -65,6 +65,10 @@ NODE_ENV=local node src/index.js
 
       - Server started on the configured port
 
+
+- To check on terminal that server is running or not 
+`curl http://localhost:3000/api/health
+`
 ## 5. Running the Application with PM2
 
 The application can also be run using PM2 for process management.

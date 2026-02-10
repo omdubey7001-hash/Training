@@ -1,45 +1,22 @@
 services:
-  client:
-    image: node:20-alpine
-    container_name: react-client
-    working_dir: /app
-    volumes:
-      - ./client:/app
+  server:
+    build: ./server
     ports:
       - "3000:3000"
-    command: sh -c "npm install && npm start"
-    depends_on:
-      - server
-    networks:
-      - app-network
-
-  server:
-    image: node:20-alpine
-    container_name: node-server
-    working_dir: /app
-    volumes:
-      - ./server:/app
-    ports:
-      - "5000:5000"
-    environment:
-      MONGO_URI: mongodb://mongo:27017/appdb
-    command: sh -c "npm install && npm start"
     depends_on:
       - mongo
-    networks:
-      - app-network
 
   mongo:
     image: mongo:6
-    container_name: mongo-db
     volumes:
-      - mongo-data:/data/db
-    networks:
-      - app-network
+      - mongo_data:/data/db
 
-networks:
-  app-network:
-    driver: bridge
+  client:
+    build: ./client
+    ports:
+      - "3001:3000"
+    depends_on:
+      - server
 
 volumes:
-  mongo-data:
+  mongo_data:

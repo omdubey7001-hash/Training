@@ -203,3 +203,34 @@ This query engine design ensures:
 
 The system is ready for real-world usage and future extensions such as
 authentication, authorization, and rate limiting.
+
+
+## Some examples from POSTMAN
+
+- `Product Create`
+
+![Product Create](images/JobTrigger.png)
+
+---
+
+-`Product List`
+
+![Product List](images/Product%20List.png)
+
+---
+
+- `Filter + Sort`
+
+![Filter+Sort](images/Filter+Sort.png)
+
+---
+
+- `Product Delete`
+
+![Delete Product](images/Delete%20job.png)
+
+---
+
+- `Delete Product verification`
+
+![Verification](images/Delete%20verification.png)

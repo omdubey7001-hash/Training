@@ -1,56 +1,129 @@
-# Service Architecture — Docker Compose
+# Service Architecture — Docker Compose (Day 2)
 
 ## Overview
-This application is a multi-container setup using Docker Compose.
-It consists of three services:
+This project uses Docker Compose to run a multi-container application that
+represents a real-world production setup.
 
-- React Client
-- Node.js Server
-- MongoDB Database
+The architecture consists of three main services:
+- Client (React)
+- Server (Node.js + Express)
+- Database (MongoDB)
 
-All services run in isolated containers and communicate via Docker networking.
+All services run in isolated Docker containers and communicate over a single
+Docker network created automatically by Docker Compose.
 
 ---
 
-## Services
+## Services Description
 
 ### 1. Client (React)
-- Runs on port `3000`
-- Built from `./client`
-- Communicates with the Node server via HTTP
+- Runs the frontend application.
+- Built using Create React App.
+- Exposed to host machine on port 3001.
+- Sends HTTP requests to the backend service.
 
-### 2. Server (Node.js)
-- Runs on port `5000`
-- Built from `./server`
-- Connects to MongoDB using internal Docker DNS
-- Mongo connection string:  `mongodb://mongo:27017/appdb`
-
-### 3. MongoDB
-- Official MongoDB image
-- Data stored using Docker volume
-- Persistent across container restarts
+Container:
+- Image built from `client/Dockerfile`
+- Port mapping: `3001:3000`
 
 ---
+
+### 2. Server (Node.js + Express)
+- Handles API requests from the client.
+- Connects to MongoDB for data storage.
+- Exposed to host machine on port 3000.
+
+Database Connection:
+- Uses Docker internal DNS.
+- Connects using service name, not localhost.
+
+Example:
+```js
+mongodb://mongo:27017/testdb
+```
+
+Container:
+
+- Image built from `server/Dockerfile`
+
+- Port mapping: `3000:3000`
+
+### 3. Database (MongoDB)
+
+- Stores application data.
+
+- Runs using the official MongoDB Docker image.
+
+- Uses Docker volume for persistent storage.
+
+#### Volume:
+
+- `mongo_data:/data/db`
+
+This ensures that data is not lost when containers are restarted or removed.
 
 ## Networking
-- All services are connected to a custom bridge network
-- Containers resolve each other using service names
 
----
+- Docker Compose creates a default bridge network.
+
+- All services are attached to this network automatically.
+
+- Containers communicate using service names as hostnames.
+
+#### Example:
+
+- Server → MongoDB: `mongo`
+
+- Client → Server: `server`
+
+No container uses hardcoded IP addresses.
 
 ## Volumes
-- `mongo-data` stores MongoDB data persistently
-- Server logs mapped to host directory
 
----
+- A named Docker volume is used for MongoDB data persistence.
 
-## Logs
-- Logs are accessible using:
-`docker compose logs server`
+- Volume is managed by Docker and survives container restarts.
 
----
+- Declared in `docker-compose.yml`:
+```yaml
+volumes:
+  mongo_data:
+```
+## Startup Order
 
-## Startup
-All services are started using a single command:
+- depends_on is used to control service startup sequence.
 
-`docker compose up -d`
+- Server starts after MongoDB.
+
+- Client starts after Server.
+
+- Only a single command is required to run the whole project `docker compose up -d`.
+
+## Architecture Flow
+```
+Browser
+↓
+Client (React)
+↓
+Server (Node.js / Express)
+↓
+MongoDB
+```
+
+## Benefits of This Architecture
+
+- Clean separation of concerns.
+
+- Easy local development and testing.
+
+- Mirrors real production environments.
+
+- Scalable and maintainable setup.
+
+- Single-command deployment using Docker Compose.
+
+## Conclusion
+
+This Docker Compose-based architecture demonstrates how modern applications
+are deployed using multiple services that communicate securely and efficiently
+within containerized environments.

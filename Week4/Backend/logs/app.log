@@ -275,3 +275,23 @@
 {"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-09T06:12:55.198Z"}
 {"level":"info","message":"Server started on port 3000","timestamp":"2026-02-09T06:12:55.200Z"}
 {"level":"info","message":"Shutting down server...","timestamp":"2026-02-09T06:22:03.797Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-09T21:00:21.934Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-09T21:00:21.938Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-09T21:00:21.941Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-09T21:00:21.944Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-09T21:03:10.055Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-09T21:03:22.870Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-09T21:03:22.873Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-09T21:03:22.876Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-09T21:03:22.879Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-09T21:11:40.738Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-10T06:13:32.101Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-10T06:13:32.103Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-10T06:13:32.104Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-10T06:13:32.106Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-02-10T06:16:50.623Z","totalJobs":1}
+{"attempt":1,"level":"info","message":"Job attempt started","timestamp":"2026-02-10T06:16:50.624Z"}
+{"level":"info","message":"Processing product job","productId":"698acd52c23850dfde2c97dc","timestamp":"2026-02-10T06:16:50.624Z"}
+{"level":"info","message":"Product job completed","productName":"Samsung S24","timestamp":"2026-02-10T06:16:52.625Z"}
+{"completedJobs":1,"level":"info","message":"Job completed","timestamp":"2026-02-10T06:16:52.626Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-10T06:39:47.949Z"}

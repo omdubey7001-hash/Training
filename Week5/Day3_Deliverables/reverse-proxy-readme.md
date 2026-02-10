@@ -33,6 +33,12 @@ Backend Service (multiple replicas)
 - Not exposed directly to the host
 - Accessible only through NGINX
 
+### Command to run the compose file `docker compose up -d --scale backend=2`
+
+### To check whether backend is using round-robin for load balancing or not 
+- use this command many times:
+`curl http://localhost/api`
+
 ---
 
 ## Routing Rules
