@@ -57,7 +57,7 @@ def predict(input_data: CreditInput):
     # Convert input to DataFrame
     df = pd.DataFrame([input_data.dict()])
 
-    # 🔑 APPLY SAME PREPROCESSING AS TRAINING
+    # APPLY SAME PREPROCESSING AS TRAINING
     X_processed = preprocessor.transform(df)
 
     prediction = model.predict(X_processed)[0]

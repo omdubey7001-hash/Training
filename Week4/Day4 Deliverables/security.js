@@ -2,6 +2,9 @@ import express from "express";
 import helmet from "helmet";
 import cors from "cors";
 import rateLimit from "express-rate-limit";
+import mongoSanitize from "express-mongo-sanitize";
+import xss from "xss-clean";
+import hpp from "hpp";
 
 export function applySecurity(app) {
   // Secure HTTP headers
@@ -26,4 +29,22 @@ export function applySecurity(app) {
 
   // Payload size limit
   app.use(express.json({ limit: "10kb" }));
+  app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
+  //NoSQL injection
+  app.use(
+    mongoSanitize({
+      replaceWith: "_"
+    })
+  );
+
+  //XSS Protection
+  app.use(xss());
+
+  //Parameter Pollution Protection
+  app.use(
+    hpp({
+      whitelist: ["tags"] 
+    })
+  );
 }

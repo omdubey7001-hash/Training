@@ -3,11 +3,12 @@ import numpy as np
 import os
 import seaborn as sns
 import matplotlib.pyplot as plt
+from imblearn.over_sampling import SMOTE
 
 RAW_PATH = "src/data/raw/dataset.csv"
 PROCESSED_PATH = "src/data/processed/final.csv"
 EDA_PATH = "src/data/processed/eda"
-
+TARGET_COL = "class"
 os.makedirs(EDA_PATH, exist_ok=True)
 
 def load_data():
@@ -34,6 +35,31 @@ def clean_data(df):
         df = df[(df[col] >= Q1 - 1.5 * IQR) & (df[col] <= Q3 + 1.5 * IQR)]
 
     print("Data cleaned:", df.shape)
+    if TARGET_COL in df.columns:
+
+        print("\nClass Distribution BEFORE:")
+        print(df[TARGET_COL].value_counts())
+
+        X = df.drop(columns=[TARGET_COL])
+        y = df[TARGET_COL]
+
+        # Only numeric features for SMOTE
+        X_num = pd.get_dummies(X, drop_first=True)
+
+        smote = SMOTE(random_state=42)
+        X_resampled, y_resampled = smote.fit_resample(X_num, y)
+
+        df_resampled = pd.concat(
+            [pd.DataFrame(X_resampled), pd.Series(y_resampled, name=TARGET_COL)],
+            axis=1
+        )
+        print("\nClass Distribution AFTER SMOTE:")
+        print(df_resampled[TARGET_COL].value_counts())
+
+        print("Final Shape:", df_resampled.shape)
+
+        df = df_resampled
+
     return df
 
 def save_processed(df):

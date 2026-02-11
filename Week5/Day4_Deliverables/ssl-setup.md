@@ -124,7 +124,7 @@ Location: https://localhost
 
 Test HTTPS endpoint.
 ```bash
-curl -k https://localhost
+curl -k https://localhost/api
 ```
 
 Expected result:
@@ -137,7 +137,7 @@ Expected result:
 
 Open a browser and visit:
 ```arduino
-https://localhost
+https://localhost/api
 ```
 
 Expected result:
@@ -159,3 +159,7 @@ HTTPS setup using mkcert is complete.
 - HTTPS enabled in NGINX
 
 - HTTP redirected to HTTPS
+
+## Output response
+
+![Lock Output](images/Screenshot%20from%202026-01-13%2013-28-55.png)

@@ -21,7 +21,7 @@ os.makedirs(SPLIT_PATH, exist_ok=True)
 def load_data():
     df = pd.read_csv(DATA_PATH)
 
-    # 🔑 FORCE string columns to object dtype (IMPORTANT)
+    # FORCE string columns to object dtype (IMPORTANT)
     for col in df.select_dtypes(include=["string"]):
         df[col] = df[col].astype("object")
 
@@ -73,7 +73,7 @@ def main():
     X_train_transformed = preprocessor.fit_transform(X_train)
     X_test_transformed = preprocessor.transform(X_test)
 
-    # 🔑 SAVE PREPROCESSOR (THIS WAS MISSING)
+    # SAVE PREPROCESSOR
     joblib.dump(preprocessor, "src/models/preprocessor.pkl")
 
 

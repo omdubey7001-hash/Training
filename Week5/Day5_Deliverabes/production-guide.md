@@ -266,3 +266,9 @@ What was done
 `docker compose --profile dev down`
 
 `docker compose --profile prod down`
+
+## To check the status
+
+- `https://localhost/api`
+
+- `https://localhost/api/health`
