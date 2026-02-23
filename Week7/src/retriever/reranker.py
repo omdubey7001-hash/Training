@@ -1,5 +1,3 @@
-# src/retriever/reranker.py
-
 from sentence_transformers import CrossEncoder
 
 class CrossEncoderReranker:

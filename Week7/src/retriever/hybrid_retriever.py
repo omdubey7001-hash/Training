@@ -5,6 +5,7 @@ from src.retriever.query_engine import search as semantic_search
 from src.retriever.merge_utils import merge_and_dedup
 from src.retriever.reranker import CrossEncoderReranker
 from src.retriever.mmr import MMRSelector
+from src.memory.memory_store import MemoryStore
 
 
 
@@ -51,45 +52,54 @@ class HybridRetriever:
         self.keyword = KeywordRetriever()
         self.reranker = CrossEncoderReranker()
         self.mmr = MMRSelector(lambda_param=0.7)
+        self.memory = MemoryStore()
 
-    def search(self, query, top_k_semantic=5, top_k_keyword=5, final_k=5):
+    def search(self, query,flag = True, top_k_semantic=5, top_k_keyword=5, final_k=5):
+        history_context = self.memory.get_context()
+        if history_context:
+            print("\nUsing Memory Context...\n")
 
-        # 1️⃣ Semantic Retrieval (FAISS)
-        semantic_results = semantic_search(query, top_k=top_k_semantic)
+        enhanced_query = query
+
+        # 1 Semantic Retrieval (FAISS)
+        semantic_results = semantic_search(enhanced_query, top_k=top_k_semantic)
         for r in semantic_results:
             r["type"] = "semantic"
 
-        # 2️⃣ Keyword Retrieval (BM25)
-        keyword_results = self.keyword.search(query, top_k=top_k_keyword)
+        # 2 Keyword Retrieval (BM25)
+        keyword_results = self.keyword.search(enhanced_query, top_k=top_k_keyword)
 
-        # 3️⃣ Merge + Dedup
+        # 3 Merge + Dedup
         merged = merge_and_dedup(semantic_results, keyword_results)
 
-        print("\n--- Merged & Deduplicated Results ---\n")
-        for i, r in enumerate(merged, 1):
-            print(
-                f"{i}. [{r['type']}] {r['source']} | "
-                f"chunk {r.get('chunk_id', 'N/A')} | score {r['score']:.4f}"
-            )
+        if(flag == True): 
+            print("\n--- Merged & Deduplicated Results ---\n")
+            for i, r in enumerate(merged, 1):
+                print(
+                    f"{i}. [{r['type']}] {r['source']} | "
+                    f"chunk {r.get('chunk_id', 'N/A')} | score {r['score']:.4f}"
+                    
+                )
+                print(r["text"])
 
-        # 4️⃣ Cross-Encoder Reranking
-        # (yahan thode zyada candidates rakho for MMR)
+        # 4 Cross-Encoder Reranking
         reranked = self.reranker.rerank(
-            query=query,
+            query=enhanced_query,
             candidates=merged,
             top_k=10
         )
 
-        print("\n--- Cross-Encoder Reranked ---\n")
-        for i, r in enumerate(reranked, 1):
-            print(
-                f"{i}. {r['source']} | chunk {r.get('chunk_id', 'N/A')} "
-                f"| rerank_score {r['rerank_score']:.4f}"
-            )
+        if(flag == False): 
+            print("\n--- Cross-Encoder Reranked ---\n")
+            for i, r in enumerate(reranked, 1):
+                print(
+                    f"{i}. {r['source']} | chunk {r.get('chunk_id', 'N/A')} "
+                    f"| rerank_score {r['rerank_score']:.4f}"
+                )
 
-        # 5️⃣ MMR (Final selection for LLM context)
+        # 5 MMR (Final selection for LLM context)
         final_results = self.mmr.select(
-            query=query,
+            query=enhanced_query,
             candidates=reranked,
             top_k=final_k
         )
@@ -99,6 +109,12 @@ class HybridRetriever:
             print(
                 f"{i}. {r['source']} | chunk {r.get('chunk_id', 'N/A')}"
             )
+        '''summary_answer = " | ".join([r["source"] for r in final_results[:3]])
+        self.memory.add(query, summary_answer)'''
+
+        for r in final_results:
+            lines = [l for l in r["text"].split("\n") if "|" not in l]
+            r["text"] = "\n".join(lines)
 
         return final_results
 

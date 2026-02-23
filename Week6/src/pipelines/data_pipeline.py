@@ -9,6 +9,7 @@ RAW_PATH = "src/data/raw/dataset.csv"
 PROCESSED_PATH = "src/data/processed/final.csv"
 EDA_PATH = "src/data/processed/eda"
 TARGET_COL = "class"
+
 os.makedirs(EDA_PATH, exist_ok=True)
 
 def load_data():
@@ -19,7 +20,7 @@ def load_data():
 def clean_data(df):
     df = df.drop_duplicates()
 
-    # Handle missing values
+    # Handle missing values using median
     for col in df.select_dtypes(include=np.number):
         df[col] = df[col].fillna(df[col].median())
 
@@ -35,6 +36,7 @@ def clean_data(df):
         df = df[(df[col] >= Q1 - 1.5 * IQR) & (df[col] <= Q3 + 1.5 * IQR)]
 
     print("Data cleaned:", df.shape)
+
     if TARGET_COL in df.columns:
 
         print("\nClass Distribution BEFORE:")

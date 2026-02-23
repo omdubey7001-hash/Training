@@ -19,28 +19,23 @@ class SQLGenerator:
         )
 
     def _extract_sql(self, text: str) -> str:
-        """
-        Robust SQL extractor:
-        - Removes explanations / OUTPUT text
-        - Extracts first valid SELECT statement
-        """
 
-        # Remove everything before SQL:
-        if "SQL:" in text:
-            text = text.split("SQL:", 1)[1]
-
-        # Regex to capture SELECT ... ;
         match = re.search(
-            r"(SELECT\s+.*?;)",
+            r"(SELECT\s+.*?)(;|$)",
             text,
             re.IGNORECASE | re.DOTALL
         )
 
         if not match:
-            raise ValueError("❌ No valid SQL found in LLM output")
+            print("\nDEBUG LLM OUTPUT:\n", text)
+            raise ValueError("No valid SQL found in LLM output")
 
         sql = match.group(1).strip()
+        if not sql.endswith(";"):
+            sql += ";"
+
         return sql
+
 
     def generate(self, question: str, schema: str) -> str:
         """
@@ -48,35 +43,42 @@ class SQLGenerator:
         """
 
         prompt = f"""
-You are an expert SQL generator.
+<|system|>
+You generate SQL queries only.
 
+<|user|>
 DATABASE SCHEMA:
 {schema}
 
-STRICT RULES:
-- Output ONLY a valid SQL query
+Rules:
+- Output ONLY SQL
 - Start with SELECT
-- Do NOT explain anything
-- Do NOT add words like OUTPUT, RESULT, NOTE
-- Use table and column names exactly from schema
-- End the query with ;
+- End with ;
+- No explanation
 
-QUESTION:
+Question:
 {question}
 
-SQL:
+<|assistant|>
 """
+
 
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.device)
 
         with torch.no_grad():
             output = self.model.generate(
                 **inputs,
-                max_new_tokens=150,
-                do_sample=False
+                max_new_tokens=120,
+                temperature=0.2,
+                top_p=0.9,
+                repetition_penalty=1.2,
+                do_sample=True,
+                eos_token_id=self.tokenizer.eos_token_id
             )
 
-        decoded = self.tokenizer.decode(output[0], skip_special_tokens=True)
+
+        gen_tokens = output[0][inputs["input_ids"].shape[1]:]
+        decoded = self.tokenizer.decode(gen_tokens, skip_special_tokens=True)
 
         sql = self._extract_sql(decoded)
         return sql

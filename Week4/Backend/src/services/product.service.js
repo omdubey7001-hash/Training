@@ -36,7 +36,7 @@ class ProductService {
     return ProductRepository.findWithFilters(query);
   }
 
-  async deleteProduct(id) {
+  async softdeleteProduct(id) {
     const product = await ProductRepository.softDelete(id);
     if (!product) {
       const error = new Error("Product not found");

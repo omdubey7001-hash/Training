@@ -11,13 +11,11 @@ def main():
     print(f"Found {len(md_files)} markdown files")
 
     for md_file in md_files:
-        # Text read karo
         text = md_file.read_text(encoding="utf-8", errors="ignore")
 
         if not text.strip():
             continue
 
-        # Unique output name banao
         relative_path = md_file.relative_to(RAW_ROOT)
         safe_name = "_".join(relative_path.parts).replace(".md", ".txt")
 

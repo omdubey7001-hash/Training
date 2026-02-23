@@ -295,3 +295,87 @@
 {"level":"info","message":"Product job completed","productName":"Samsung S24","timestamp":"2026-02-10T06:16:52.625Z"}
 {"completedJobs":1,"level":"info","message":"Job completed","timestamp":"2026-02-10T06:16:52.626Z"}
 {"level":"info","message":"Shutting down server...","timestamp":"2026-02-10T06:39:47.949Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T05:53:31.766Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T05:53:31.768Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T05:53:31.769Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T05:53:31.771Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T06:05:40.061Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T06:05:41.998Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T06:05:42.000Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T06:05:42.002Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T06:05:42.003Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T06:14:35.775Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T06:14:38.197Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T06:14:38.198Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T06:14:38.200Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T06:14:38.201Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-02-12T06:18:34.229Z","totalJobs":1}
+{"attempt":1,"level":"info","message":"Job attempt started","timestamp":"2026-02-12T06:18:34.229Z"}
+{"level":"info","message":"Processing product job","productId":"698d70ba5bd19cb2eca93586","timestamp":"2026-02-12T06:18:34.230Z"}
+{"level":"info","message":"Product job completed","productName":"<script>alert(1)</script>","timestamp":"2026-02-12T06:18:36.231Z"}
+{"completedJobs":1,"level":"info","message":"Job completed","timestamp":"2026-02-12T06:18:36.232Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T06:27:55.901Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T06:27:57.319Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T06:27:57.320Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T06:27:57.322Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T06:27:57.323Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T06:30:02.105Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T06:30:02.107Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T06:30:02.108Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T06:30:02.110Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T06:31:15.394Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T06:31:17.248Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T06:31:17.250Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T06:31:17.252Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T06:31:17.253Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T06:34:48.867Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T06:35:39.562Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T06:35:39.563Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T06:35:39.565Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T06:35:39.566Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-02-12T06:35:44.413Z","totalJobs":1}
+{"attempt":1,"level":"info","message":"Job attempt started","timestamp":"2026-02-12T06:35:44.413Z"}
+{"level":"info","message":"Processing product job","productId":"698d74c0badc931a40787fcf","timestamp":"2026-02-12T06:35:44.414Z"}
+{"level":"info","message":"Product job completed","productName":"&lt;script&gt;alert(2)&lt;/script&gt;","timestamp":"2026-02-12T06:35:46.414Z"}
+{"completedJobs":1,"level":"info","message":"Job completed","timestamp":"2026-02-12T06:35:46.415Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T07:04:27.864Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T07:04:29.353Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T07:04:29.354Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T07:04:29.356Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T07:04:29.357Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T07:06:02.909Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T07:06:04.309Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T07:06:04.311Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T07:06:04.313Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T07:06:04.314Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T07:10:49.893Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T07:13:09.728Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T07:13:09.729Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T07:13:09.731Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T07:13:09.732Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T07:16:11.194Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T07:16:12.607Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T07:16:12.609Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T07:16:12.611Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T07:16:12.612Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-02-12T07:23:09.260Z","totalJobs":1}
+{"attempt":1,"level":"info","message":"Job attempt started","timestamp":"2026-02-12T07:23:09.261Z"}
+{"level":"info","message":"Processing product job","productId":"698d7fddc8cd2217800a52fc","timestamp":"2026-02-12T07:23:09.261Z"}
+{"level":"info","message":"Product job completed","productName":"&lt;script&gt;alert(1)&lt;/script&gt;","timestamp":"2026-02-12T07:23:11.262Z"}
+{"completedJobs":1,"level":"info","message":"Job completed","timestamp":"2026-02-12T07:23:11.263Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T07:23:54.785Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T08:11:49.636Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T08:11:49.638Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T08:11:49.640Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T08:11:49.641Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T08:11:50.906Z"}
+{"level":"info","message":"Database connected","timestamp":"2026-02-12T12:17:01.557Z"}
+{"level":"info","message":"Middlewares loaded","timestamp":"2026-02-12T12:17:01.569Z"}
+{"level":"info","message":"Routes mounted: 1 endpoints","timestamp":"2026-02-12T12:17:01.583Z"}
+{"level":"info","message":"Server started on port 3000","timestamp":"2026-02-12T12:17:01.592Z"}
+{"level":"info","message":"Job added to queue","timestamp":"2026-02-12T12:22:12.161Z","totalJobs":1}
+{"attempt":1,"level":"info","message":"Job attempt started","timestamp":"2026-02-12T12:22:12.164Z"}
+{"level":"info","message":"Processing product job","productId":"698dc5f4d3aec3eff7c7b979","timestamp":"2026-02-12T12:22:12.166Z"}
+{"level":"info","message":"Product job completed","productName":"Apple","timestamp":"2026-02-12T12:22:14.168Z"}
+{"completedJobs":1,"level":"info","message":"Job completed","timestamp":"2026-02-12T12:22:14.168Z"}
+{"level":"info","message":"Shutting down server...","timestamp":"2026-02-12T13:01:30.861Z"}

@@ -41,7 +41,7 @@ def search(query: str, top_k: int = 5):
             "score": float(scores[0][rank]),
             "source": meta["source_file"],
             "chunk_id": meta["chunk_id"],
-            "text": text[:800]  # preview
+            "text": text[:800] 
         })
 
     return results

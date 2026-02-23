@@ -16,10 +16,9 @@ def main():
 
     dim = embeddings.shape[1]
 
-    # Flat index (accurate, simple – best for Day 1)
+
     index = faiss.IndexFlatIP(dim)
 
-    # embeddings already normalized → inner product = cosine similarity
     index.add(embeddings)
 
     faiss.write_index(index, str(OUT_DIR / "index.faiss"))

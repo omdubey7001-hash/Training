@@ -199,9 +199,9 @@ Team Sports — 316
 
 ## 12. Key Features Achieved
 
-✔ Schema-aware SQL generation
-✔ Injection-safe queries
-✔ Fully local execution
-✔ Deterministic SQL output
-✔ Modular pipeline design
+- Schema-aware SQL generation
+- Injection-safe queries
+- Fully local execution
+- Deterministic SQL output
+- Modular pipeline design
 

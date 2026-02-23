@@ -12,7 +12,6 @@ def main():
 
     for chunk_file in chunk_files:
         name = chunk_file.stem
-        # example: EnterpriseRAG_xxx_chunk_12
         if "_chunk_" in name:
             source, chunk_id = name.rsplit("_chunk_", 1)
         else:

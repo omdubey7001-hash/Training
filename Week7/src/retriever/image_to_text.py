@@ -9,32 +9,28 @@ class ImageToTextRetriever:
         self.top_k = top_k
 
     def search(self, image_path):
-        # 1️⃣ Caption
         caption = self.captioner.caption(image_path)
 
-        # 2️⃣ OCR
         ocr_text = extract_text(image_path)
 
-        # 3️⃣ Combine
         combined_query = caption
         if ocr_text.strip():
             combined_query = ocr_text + "\n" + caption
 
 
-        print("\n📝 Generated Caption:")
-        print(caption)
+        # print("\n📝 Generated Caption:")
+        # print(caption)
 
-        if ocr_text.strip():
-            print("\n🔍 OCR Text:")
-            print(ocr_text[:300])
+        # if ocr_text.strip():
+        #     print("\n🔍 OCR Text:")
+        #     print(ocr_text[:300])
 
-        print("\n🧠 Combined Query Used for RAG:")
-        print(combined_query)
+        # print("\n🧠 Combined Query Used for RAG:")
+        # print(combined_query)
 
-        # 4️⃣ Text RAG
         results = text_search(combined_query, top_k=self.top_k)
 
-        return caption, results
+        return combined_query, results 
 
 
 

@@ -37,13 +37,11 @@ class TextToImageRetriever:
         return score
 
     def search(self, query: str):
-        # 1️⃣ Text → CLIP embedding
         query_vec = self.embedder.embed_text(query).astype("float32")
         scores, indices = self.index.search(query_vec, self.top_k * 3)
 
         results = []
 
-        # 2️⃣ Combine CLIP + Caption + OCR
         for idx, clip_score in zip(indices[0], scores[0]):
             meta = self.metadata[idx]
 
@@ -63,7 +61,6 @@ class TextToImageRetriever:
                 "ocr_text": ocr_text
             })
 
-        # 3️⃣ Sort + take top_k
         results = sorted(results, key=lambda x: x["final_score"], reverse=True)
         return results[:self.top_k]
 
@@ -88,7 +85,7 @@ if __name__ == "__main__":
             f"OCR Text    : {r['ocr_text'][:200]}\n"
         )
 
-        # Optional: render image in terminal
+        # To show image in terminal(CLI)
         try:
             subprocess.run(["timg", r["image_path"]])
         except Exception:

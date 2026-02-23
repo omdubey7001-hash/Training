@@ -27,4 +27,5 @@ export function applySecurity(app) {
 
   // Payload size limit
   app.use(express.json({ limit: "10kb" }));
+
 }

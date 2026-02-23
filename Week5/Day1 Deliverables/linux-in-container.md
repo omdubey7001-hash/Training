@@ -40,7 +40,7 @@
 
 -> This will build the image first if image is not build.
 
-### `docker run -d -p 3000:3000 --name node-container node-app .`
+### `docker run -d -p 3000:3000 --name node-container node-app`
 
 -> This will create a container named node-container from takingt instance from node-app image and in the current directory and it wil link your port 3000 to the container 3000 port.
 

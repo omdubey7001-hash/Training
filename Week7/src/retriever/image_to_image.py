@@ -17,11 +17,9 @@ class ImageToImageRetriever:
         self.top_k = top_k
 
     def search(self, image_path: str):
-        # 1️⃣ Embed query image
         query_vec = self.embedder.embed_image(image_path).astype("float32")
         query_vec = query_vec.reshape(1, -1)
-
-        # 2️⃣ FAISS search
+        
         scores, indices = self.index.search(query_vec, self.top_k)
 
         results = []

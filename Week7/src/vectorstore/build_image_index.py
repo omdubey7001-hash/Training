@@ -36,7 +36,7 @@ def main():
     with open(INDEX_META_PATH, "w") as f:
         json.dump(metadata, f, indent=2)
 
-    print(f"✅ Image FAISS index created")
+    print(f"Image FAISS index created")
     print(f"Vectors: {index.ntotal}")
     print(f"Saved at: {INDEX_PATH}")
 

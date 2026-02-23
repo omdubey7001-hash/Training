@@ -11,7 +11,7 @@ from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neural_network import MLPClassifier
 
 DATA_PATH = "src/data/processed/final.csv"
-TARGET_COL = "class"   # ⚠️ must match Day-2 target
+TARGET_COL = "class"   
 MODEL_PATH = "src/models/best_model.pkl"
 METRICS_PATH = "src/evaluation/metrics.json"
 
@@ -21,7 +21,7 @@ def load_data():
     X = pd.get_dummies(df.drop(columns=[TARGET_COL]), drop_first=True)
     y = df[TARGET_COL].map({"bad": 0, "good": 1})
 
-    # 🔑 SAVE FEATURE COLUMNS
+    # SAVE FEATURE COLUMNS
     joblib.dump(X.columns.tolist(), "src/models/feature_columns.pkl")
 
     scaler = StandardScaler()

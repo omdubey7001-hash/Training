@@ -1,9 +1,11 @@
 import ProductService from "../services/product.service.js";
+import { sanitizeInput } from "../utils/sanitize.js";
 
 class ProductController {
   async create(req, res, next) {
     try {
-      const product = await ProductService.createProduct(req.body);
+      const cleaned = sanitizeInput(req.body);
+      const product = await ProductService.createProduct(cleaned);
       res.status(201).json({ success: true, data: product });
     } catch (err) {
       next(err);
@@ -31,6 +33,15 @@ class ProductController {
   async delete(req, res, next) {
     try {
       const product = await ProductService.deleteProduct(req.params.id);
+      res.json({ success: true, data: product });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async softDelete(req, res, next) {
+    try {
+      const product = await ProductService.softdeleteProduct(req.params.id);
       res.json({ success: true, data: product });
     } catch (err) {
       next(err);

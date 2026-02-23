@@ -1,6 +1,17 @@
 import { Queue } from "bullmq";
-import connection from "./redis.connection.js";
+import IORedis from "ioredis";
 
-export const productQueue = new Queue("product-queue", {
-  connection
+const connection = new IORedis(process.env.REDIS_URL);
+
+export const productQueue = new Queue("email-queue", {
+  connection,
+  defaultJobOptions: {
+    attempts: 3,
+    backoff: {
+      type: "exponential",
+      delay: 2000
+    },
+    removeOnComplete: true,
+    removeOnFail: false
+  }
 });

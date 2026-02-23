@@ -1,4 +1,3 @@
-# src/utils/schema_loader.py
 import sqlite3
 
 

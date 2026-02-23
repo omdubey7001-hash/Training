@@ -27,16 +27,16 @@ def main():
             if img.suffix.lower() not in [".jpg", ".jpeg", ".png"]:
                 continue
 
-            print(f"🖼 Processing image: {img}")
+            print(f" Processing image: {img}")
 
-            # 1️⃣ CLIP embedding
+            # CLIP embedding
             vec = clip.embed_image(str(img))
             embeddings.append(vec)
 
-            # 2️⃣ BLIP caption
+            # BLIP caption
             caption = blip.caption(str(img))
 
-            # 3️⃣ OCR text
+            # OCR text
             ocr_text = extract_text(str(img))
 
             metadata.append({
@@ -52,7 +52,7 @@ def main():
     with open(META_PATH, "w") as f:
         json.dump(metadata, f, indent=2)
 
-    print(f"\n✅ Stored {len(metadata)} images with CLIP + BLIP + OCR")
+    print(f"\nStored {len(metadata)} images with CLIP + BLIP + OCR")
 
 if __name__ == "__main__":
     main()

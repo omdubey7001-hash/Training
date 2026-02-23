@@ -4,9 +4,7 @@ from src.utils.sql_validator import validate_sql
 from src.utils.sql_executor import execute_sql
 
 
-def main():
-    question = input("Ask SQL question: ")
-
+def ask_sql(question):
     schema = load_schema()
     print("\n--- DATABASE SCHEMA ---")
     print(schema)
@@ -21,11 +19,5 @@ def main():
 
     cols, rows = execute_sql(sql)
 
-    print("\n--- RESULT ---")
-    print(cols)
-    for r in rows[:10]:
-        print(r)
+    return cols, rows
 
-
-if __name__ == "__main__":
-    main()

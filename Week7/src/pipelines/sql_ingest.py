@@ -14,7 +14,7 @@ def main():
     df.to_sql("products", conn, if_exists="replace", index=False)
 
     conn.close()
-    print("✅ SQLite DB created with table: products")
+    print("SQLite DB created with table: products")
 
 if __name__ == "__main__":
     main()
