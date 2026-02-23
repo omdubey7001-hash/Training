@@ -14,8 +14,6 @@ The objective was to build a clean and balanced dataset suitable for LoRA / QLoR
 
 ---
 
----
-
 ## 2. Dataset Source
 
 The dataset used for instruction tuning was downloaded from the Hugging Face Hub:
