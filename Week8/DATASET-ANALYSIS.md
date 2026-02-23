@@ -44,7 +44,7 @@ dataset = load_dataset("tatsu-lab/alpaca")
 
 The dataset was cleaned and filtered to ensure stable training performance.
 
-![CLI view](images/s1.png)
+![CLI view](src/images/s1.png)
 
 ---
 
@@ -94,7 +94,7 @@ Token statistics computed from the training dataset:
 - Outputs are medium-length, ideal for instruction tuning tasks.
 - Maximum sequence length (442) remains safely below the 512-token threshold.
 
-![CLI view](images/s2.png)
+![CLI view](src/images/s2.png)
 ---
 
 ## 6. Distribution Analysis

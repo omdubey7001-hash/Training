@@ -87,7 +87,6 @@ Purpose:
 - Enable QLoRA training on Colab
 
 
-
 ### Step 2 — LoRA Adapter Injection
 
 LoRA layers were added using PEFT configuration:
@@ -97,7 +96,6 @@ LoRA layers were added using PEFT configuration:
 - dropout = 0.05
 
 Only adapter layers were set as trainable.
-
 
 
 ### Step 3 — Dataset Formatting
@@ -116,9 +114,7 @@ Input:
 Response:
 ```
 
-
 This format helps the model learn structured instruction-following behaviour.
-
 
 
 ### Step 4 — Training Execution
@@ -133,7 +129,6 @@ During training:
 
 - Loss decreased gradually
 - No GPU memory overflow occurred
-
 
 
 ### Step 5 — Adapter Saving

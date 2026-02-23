@@ -132,3 +132,5 @@ Week7/src/vectorstore/*.json
 # models
 
 quantized
+
+llama.cpp

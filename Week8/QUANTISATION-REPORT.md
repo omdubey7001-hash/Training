@@ -90,19 +90,19 @@ Disk usage was measured using:
 ### Some screenshots that were observed during implementation
 - ####  FP16
 
-![](images/s6fp16.png)
+![](src/images/s6fp16.png)
 
 - #### INT4
 
-![](images/s4-int4.png) 
+![](src/images/s4-int4.png) 
 
 - #### INT8
 
-![](images/s5-int8.png) 
+![](src/images/s5-int8.png) 
 
 - #### GGUF (q8_0)
 
-![](images/s3-gguf.png)
+![](src/images/s3-gguf.png)
 
 
 ### Observations
