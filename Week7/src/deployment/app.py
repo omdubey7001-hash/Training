@@ -15,14 +15,14 @@ memory = MemoryStore()
 
 def confidence_score(results):
 
-    # 🧠 SQL result case → tuple (cols, rows)
+    # SQL result case → tuple (cols, rows)
     if isinstance(results, tuple):
         cols, rows = results
         if not rows:
             return 0.0
-        return 1.0   # SQL execution successful → high confidence
+        return 1.0
 
-    # 🧠 Text RAG case → list[dict]
+    # Text RAG case → list[dict]
     if isinstance(results, list) and results:
         if "score" in results[0]:
             return round(results[0]["score"], 3)
@@ -44,9 +44,8 @@ def hallucination_check(answer):
     return False
 
 
-# ---------------------------
 # /ask  (TEXT RAG)
-# ---------------------------
+
 def ask(question, flag=True):
 
     print("\n=== /ask endpoint ===\n")
@@ -70,9 +69,8 @@ def ask(question, flag=True):
 
 
 
-# ---------------------------
-# /ask-image
-# ---------------------------
+# /ask image
+
 def ask_image(question):
 
     results = rag.run(question)
@@ -93,9 +91,8 @@ def ask_image(question):
     }
 
 
-# ---------------------------
 # /ask-sql
-# ---------------------------
+
 def ask_sql_query(question):
 
     print("\n=== /ask-sql endpoint ===\n")
@@ -114,9 +111,9 @@ def ask_sql_query(question):
         "hallucination": hallucinated
     }
 
-# ---------------------------
+
 # CLI ROUTER
-# ---------------------------
+
 if __name__ == "__main__":
 
     while True:

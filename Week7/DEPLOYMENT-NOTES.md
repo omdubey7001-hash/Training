@@ -1,9 +1,11 @@
-# Enterprise Multimodal RAG — Deployment Notes (Day 5 Capstone)
+# 🚀 Enterprise Multimodal RAG — Deployment Notes (Day 5 Capstone)
 
-## Project Overview
+---
+
+## 📌 Project Overview
 
 This project implements an **Enterprise Knowledge Intelligence System**
-based on Advanced Retrieval-Augmented Generation (RAG).
+based on **Advanced Retrieval-Augmented Generation (RAG)**.
 
 The system supports:
 
@@ -16,13 +18,15 @@ The system supports:
 
 The architecture follows an enterprise-grade GenAI pipeline.
 
-------------------------------------------------------------
+---
 
-## System Architecture
+## 🧠 System Architecture
 
-User → API → Multimodal Router → Retriever → Generator → Evaluator → Response
 
-Modules:
+User → Streamlit UI → FastAPI → Multimodal Router → Hybrid Retriever → Generator → Evaluation → Response
+
+
+### Modules
 
 - Hybrid Retriever (Semantic + Keyword + Rerank + MMR)
 - Multimodal Router (Text/Image Input Detection)
@@ -30,63 +34,63 @@ Modules:
 - Memory Store (last 5 interactions)
 - Evaluation Engine (Faithfulness + Confidence)
 
-------------------------------------------------------------
+---
 
-## Folder Structure
+## 📂 Folder Structure
+
 ```
 src/
 │
 ├── deployment/
-│   ├── api.py
-│   ├── app.py
+│ ├── api.py
+│ ├── app.py
+│ ├── ui.py ← Streamlit UI
 │
 ├── retriever/
-│   ├── hybrid_retriever.py
-│   ├── multimodal_router.py
+│ ├── hybrid_retriever.py
+│ ├── multimodal_router.py
 │
 ├── generator/
-│   ├── query_generator.py
-│   ├── sql_generator.py
+│ ├── query_generator.py
+│ ├── sql_generator.py
 │
 ├── pipelines/
-│   ├── sql_pipeline.py
+│ ├── sql_pipeline.py
 │
 ├── memory/
-│   ├── memory_store.py
+│ ├── memory_store.py
 │
 ├── evaluation/
-│   ├── rag_eval.py
+│ ├── rag_eval.py
 │
 ├── data/
-│   ├── raw/
-│   ├── chunks/
-│   ├── embeddings/
-│   ├── vectorstore/
+│ ├── raw/
+│ ├── chunks/
+│ ├── embeddings/
+
 ```
-------------------------------------------------------------
+---
 
 ## Models Used
 
-LLM:
-- `TinyLlama-1.1B-Chat (Local)`
+**LLM**
+- TinyLlama-1.1B-Chat (Local)
 
-Embeddings:
-- `BAAI/bge-small-en`
+**Embeddings**
+- BAAI/bge-small-en
 
-Vision:
-- `CLIP / BLIP pipelines`
+**Vision**
+- CLIP / BLIP pipelines
 
-Vector Database:
-- `FAISS`
+**Vector Database**
+- FAISS
 
-Database:
-- `SQLite`
+**Database**
+- SQLite
 
-------------------------------------------------------------
+---
 
 ## Hybrid Retrieval Pipeline
-
-Steps:
 
 1. Semantic Search (FAISS)
 2. Keyword Search (BM25)
@@ -96,7 +100,7 @@ Steps:
 
 This reduces hallucination and improves grounding.
 
-------------------------------------------------------------
+---
 
 ## Memory System
 
@@ -107,9 +111,11 @@ Memory stores:
 - Chat history injection into prompts
 
 File:
+
 `memory/memory_store.py`
 
-------------------------------------------------------------
+
+---
 
 ## Evaluation System
 
@@ -121,159 +127,140 @@ Metrics implemented:
 - Confidence Score
 
 File:
+
 `evaluation/rag_eval.py`
 
-------------------------------------------------------------
 
-## API Endpoints
+---
 
-### 1 TEXT RAG
+## 🌐 API Endpoints
 
-POST /ask
+### 1️⃣ TEXT RAG
 
-Request:
-```
+POST `/ask`
+
+```json
 {
   "question": "Gender Diversity"
 }
 ```
-```
+
 Response:
+```
 {
   "answer": "...",
   "confidence": 0.87,
   "hallucination": false,
-  "image": "<optional image url>"
+  "image": "http://127.0.0.1:8000/data/..."
 }
 ```
-------------------------------------------------------------
+### 2️⃣ IMAGE RAG
 
-### 2 IMAGE RAG
-
-POST /ask-image
+POST `/ask-image`
 
 Multipart Upload:
-file=<image>
 
-Response:
-{
-  "answer": "...",
-  "image": "<retrieved image>"
-}
+`file=<image>`
 
-------------------------------------------------------------
+### 3️⃣ SQL QA
 
-### 3 SQL QA
-
-POST /ask-sql
-
-Request:
+POST `/ask-sql`
+```
 {
   "question": "Show red products"
 }
-
-System Flow:
-
+```
+Flow:
+```
 NL Question → SQL Generator → SQLite Execution → Result Summary
+```
 
-------------------------------------------------------------
+## 🎨 Streamlit UI (deployment/ui.py)
 
-## Frontend (React + Vite)
+The project uses a *Streamlit interface* for rapid prototyping and demonstration.
 
 UI Features:
 ```
-✔ Chat Interface
-✔ Mode Switching (Ask / Image / SQL)
+✔ Chat-like interface
+✔ Mode Switching (Text / Image / SQL)
 ✔ Image Upload
-✔ Confidence Display
-✔ Hallucination Flag
+✔ Retrieved Image Preview
+✔ Confidence + Hallucination Display
 ```
-Image Rendering:
-
-<img src=![](SS/image.png) />
-
-------------------------------------------------------------
-
-## Running the Backend
+Example UI Flow:
+```
+User Input → Streamlit → FastAPI API → Response Rendered
+```
+## ▶️ Running the Backend
 
 Activate environment:
-
-`source .venv/bin/activate`
-
-Start API:
-
-`uvicorn src.deployment.api:app --reload`
-
+```bash
+source .venv/bin/activate
+```
+Start FastAPI:
+```bash
+uvicorn src.deployment.api:app --reload
+```
 Server:
-`http://127.0.0.1:8000`
+```code
+http://127.0.0.1:8000
+```
+## 🖥️ Running Streamlit UI
+```bash
+streamlit run src/deployment/ui.py
+```
+Open:
+```code
+http://localhost:8501
+```
+## 📷 Static Image Serving
 
-------------------------------------------------------------
-
-## Running Frontend
-
-cd rag-ui
-npm install
-npm run dev
-
-Frontend:
-http://localhost:5173
-
-------------------------------------------------------------
-
-## Static Image Serving
-
-FastAPI mounts image directory:
-
-`app.mount("/data", StaticFiles(directory="src/data/raw/data_inside"))`
-
-Generator returns public URL:
-
+FastAPI mounts dataset images:
+```python
+app.mount("/data"StaticFiles(directory="src/data/raw/data_inside"))
+```
+Generator converts local image paths into public URLs:
+```code
 http://127.0.0.1:8000/data/<image_path>
+```
 
-------------------------------------------------------------
+## 🧠 Hallucination Prevention
+Implemented techniques:
 
-## Hallucination Prevention
+- Context-only answering prompts
 
-Implemented:
-
-- Context-only answering prompt
 - Hybrid retrieval
+
 - Reranking
+
 - Faithfulness scoring
 
-------------------------------------------------------------
+## 🔐 Production Notes
 
-## Production Notes
+Recommended improvements:
 
-Recommended:
+- API key authentication
 
-- Add API key auth
 - Rate limiting
+
 - Structured logging
+
 - Redis memory backend
-- Async streaming responses
 
-------------------------------------------------------------
+- Streaming responses
 
-## Completion Checklist (Day 5)
-
-✔ Multimodal RAG Working  
-✔ Hybrid Retriever Implemented  
-✔ SQL QA Pipeline Running  
-✔ Memory Integration  
-✔ Evaluation Metrics  
-✔ FastAPI Deployment  
-✔ React UI Connected  
-
-------------------------------------------------------------
-
-## Final Outcome
-
-![](SS/image.png)
+## 🎯 Final Outcome
 
 This system simulates a real enterprise GenAI platform capable of:
 
 - Document Intelligence
+
 - Visual Knowledge Retrieval
+
 - Structured Data Querying
+
 - Faithful Answer Generation
+
+# It looks like this:-
+
+![](/Week7/images/imageis.png)
