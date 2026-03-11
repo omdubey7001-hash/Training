@@ -1,0 +1,48 @@
+
+Transformers
+============
+
+The Transformer is a deep learning model architecture introduced in the paper "Attention Is All You Need" (Vaswani et al., 2017). It relies entirely on self‑attention mechanisms to process sequential data, dispensing with recurrence and convolution. The core idea is that each token in a sequence can attend to every other token, allowing the model to capture long‑range dependencies efficiently.
+
+Key Components (Blocks)
+-----------------------
+
+1. **Input Embedding + Positional Encoding**
+   - Tokens are mapped to dense vectors (embeddings).
+   - Since the model has no recurrence, positional encodings (sinusoidal or learned) are added to preserve token order.
+
+2. **Multi‑Head Self‑Attention (MHSA)**
+   - For each head, queries (Q), keys (K), and values (V) are linear projections of the input.
+   - Attention scores are computed as softmax(Q·Kᵀ / √d_k) and weighted sums of V produce the head output.
+   - Outputs of all heads are concatenated and linearly projected to form the block output.
+
+3. **Add & Norm (Residual + LayerNorm)**
+   - The input to the MHSA block is added to its output (residual connection) and then normalized.
+
+4. **Position‑wise Feed‑Forward Network (FFN)**
+   - Two linear layers with a ReLU (or GELU) activation in between: `FFN(x) = max(0, xW₁ + b₁)W₂ + b₂`.
+   - Operates independently on each position.
+
+5. **Add & Norm (Residual + LayerNorm)**
+   - Residual connection from the MHSA output to the FFN output, followed by layer normalization.
+
+6. **Encoder Stack**
+   - A stack of N identical encoder layers (each comprising the blocks above). The encoder processes the entire input sequence and produces contextualized representations.
+
+7. **Decoder Stack**
+   - Similar to the encoder but with an additional masked multi‑head self‑attention layer to prevent attending to future positions.
+   - Cross‑attention layer that attends to encoder outputs.
+   - Followed by the same Add & Norm and FFN blocks.
+
+8. **Output Projection**
+   - Final linear layer maps decoder outputs to vocabulary logits for tasks like translation.
+
+Benefits
+--------
+- Parallelizable training due to lack of recurrence.
+- Ability to model long‑range dependencies.
+- Modular design: encoder and decoder can be reused across tasks.
+
+Applications
+------------
+- Machine translation, text summarization, language modeling, vision (Vision Transformers), audio, and more.

@@ -142,4 +142,4 @@ Execution Order:
 
 ## To run it
 
-python "src/main(day1).py"
+python src/day1_main.py

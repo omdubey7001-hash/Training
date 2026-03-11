@@ -1,69 +1,62 @@
-# TOOL-CHAIN.md
+# TOOL-CHAIN.md — Multi-Agent Tool Orchestration System
 
-## AI Agent Tool Chain Architecture (Day-3)
+## Project Overview
 
-This document explains how the **Tool Chain system** works in the Agent framework.
-The system allows an AI orchestrator to automatically choose the correct tool (File, Database, or Code) to solve a user query.
+This project implements a **Multi-Agent Tool Orchestration System** where an intelligent **Planner Agent** dynamically decides how to solve a user task by routing it to specialized tool agents such as:
+
+* File Agent (filesystem operations)
+* Database Agent (SQLite + SQL reasoning)
+* Code Agent (Python execution & analytics)
+* Answer Agent (grounded final response)
+
+The system supports **multi-step reasoning, context passing, automation, and real execution of tools.**
 
 ---
 
-# 1. System Overview
-
-The tool-chain architecture follows this pipeline:
+## High Level Architecture
 
 ```
 User Query
-   │
-   ▼
-Orchestrator (Planner Agent)
-   │
-   ▼
-Execution Plan (JSON Steps)
-   │
-   ▼
-Selected Tool Agent
- ┌──────────────┬──────────────┬──────────────┐
- │ File Agent   │ DB Agent     │ Code Agent   │
- │ (filesystem) │ (SQLite DB)  │ (Python exec)│
- └──────────────┴──────────────┴──────────────┘
-   │
-   ▼
-Results collected in Context
-   │
-   ▼
-Answer Agent (final response)
+   ↓
+Planner Agent (Task Decomposition)
+   ↓
+Orchestrator (Execution Controller)
+   ↓
+Tool Agents (File | DB | Code)
+   ↓
+Context Aggregation / Memory
+   ↓
+Answer Agent (Final User Response)
 ```
-
-The **Orchestrator decides which tool to use** based on the user's request.
 
 ---
 
-# 2. Core Components
+## Core Components
 
-## 2.1 Orchestrator
+### Planner Agent — Brain of System
 
-The orchestrator is responsible for:
+**Responsibilities**
 
-* Understanding the user query
-* Creating a structured **execution plan**
-* Running tool agents sequentially
-* Passing outputs between steps
+* Understand user intent
+* Break task into ordered execution steps
+* Decide which tool agent to use
+* Generate STRICT JSON execution plan
 
-Example execution plan:
+**Example Plan**
 
 ```json
 {
   "steps": [
     {
       "agent": "file",
-      "task": "find sales.csv in the project",
+      "task": "Locate sales.csv",
       "input_keys": [],
-      "output_key": "sales_path"
+      "output_key": "file_path"
     },
     {
       "agent": "code",
-      "task": "analyze the CSV and generate insights",
-      "input_keys": ["sales_path"],
+      "task": "Analyze CSV and generate insights",
+      "input_keys": ["file_path"],
       "output_key": "analysis"
     }
   ]
@@ -72,37 +65,48 @@ Example execution plan:
 
 ---
 
-# 3. Tool Agents
+### Orchestrator — Execution Manager
 
-The system contains **three main tool agents**.
+**Responsibilities**
+
+* Calls planner agent
+* Parses execution plan
+* Runs tool agents sequentially
+* Maintains execution context
+* Handles step failures
+* Summarizes outputs
+
+**Execution Loop**
+
+```
+for each step:
+   prepare context
+   execute tool
+   store output
+```
 
 ---
 
-# 3.1 File Agent
+## Tool Agents
 
-Purpose:
+---
 
-* Search files
-* Read files
-* Write files
-* Locate project resources
+### File Agent
 
-Typical tasks:
+**Capabilities**
 
-```
-Find sales.csv
-Read a txt file
-Create a file
-List files in directory
-```
+* Locate files in project
+* List directories
+* Read file contents
+* Write / append files
 
-Example query:
+**Typical Tasks**
 
-```
-Find sales.csv in the project
-```
+* Find dataset
+* Show file content
+* Create notes.txt
 
-Example output:
+**Output Example**
 
 ```
 src/data/sales.csv
@@ -110,251 +114,164 @@ src/data/sales.csv
 
 ---
 
-# 3.2 Database Agent
+### Database Agent (SQLite)
 
-Purpose:
+**Capabilities**
 
-* Query SQLite database
+* Discover tables
 * Inspect schema
-* Retrieve records
-* Insert new rows
+* Execute SELECT queries
+* Return structured rows
 
-Security rules:
-
-Allowed operations:
+**Reasoning Flow**
 
 ```
-SELECT
-INSERT
+list_tables → get_schema → run_query
 ```
 
-Blocked operations:
+**Output Example**
+
+| id | product | revenue |
+| -- | ------- | ------- |
+| 1  | Laptop  | 5000    |
+| 2  | Phone   | 3000    |
+
+---
+
+### Code Execution Agent
+
+**Capabilities**
+
+* Execute Python scripts
+* Generate synthetic datasets
+* Perform pandas analytics
+* Create new CSV / TXT files
+* Return execution logs
+
+**Example Tasks**
+
+* Create CSV with random numbers
+* Analyze revenue trends
+* Generate factorial script
+
+**Output Example**
 
 ```
-UPDATE
-DELETE
-DROP
-ALTER
-```
-
-Example query:
-
-```
-Show top 5 sales records
-```
-
-Example SQL executed:
-
-```sql
-SELECT * FROM sales LIMIT 5;
+workspace/random_numbers.csv
 ```
 
 ---
 
-# 3.3 Code Agent
+## Multi-Step Orchestration Example
 
-Purpose:
+### User Query
 
-* Execute Python code
-* Perform data analysis
-* Process CSV files
-* Generate results
+> Analyze sales.csv and generate top 5 insights
 
-The Code Agent uses a **Python execution tool**.
-
-Example tasks:
+### Execution Flow
 
 ```
-Analyze sales.csv
-Generate insights
-Create files
-Run data processing
+Step 1 → File Agent → Locate dataset
+Step 2 → Code Agent → Perform pandas analysis
+Step 3 → Answer Agent → Present insights
 ```
 
-Example generated code:
+### Sample Insights Generated
+
+* Electronics category has highest revenue
+* West region leads total sales
+* Credit Card is most used payment method
+* Amit Verma is top performing sales rep
+* Electronics receives highest discount %
+
+---
+
+## Context Passing Mechanism
+
+Context is maintained as:
 
 ```python
-import pandas as pd
-
-df = pd.read_csv("src/data/sales.csv")
-
-print(df.head())
-```
-
----
-
-# 4. Context Passing
-
-Each step in the plan can depend on outputs from previous steps.
-
-Example:
-
-```
-Step 1 → File Agent
-Output → sales_path
-
-Step 2 → Code Agent
-Input → sales_path
-```
-
-Context dictionary example:
-
-```
-{
-  "sales_path": "src/data/sales.csv",
-  "analysis": "Top product is Laptop"
+context = {
+   "file_path": "src/data/sales.csv",
+   "analysis": "Top insights..."
 }
 ```
 
----
-
-# 5. Execution Flow Example
-
-User query:
-
-```
-Analyze sales.csv and generate top 5 insights
-```
-
-Execution flow:
-
-```
-User Query
-   │
-   ▼
-Orchestrator
-   │
-   ▼
-Plan Created
-   │
-   ▼
-Step 1 → File Agent
-Find CSV path
-   │
-   ▼
-Step 2 → Code Agent
-Analyze CSV
-   │
-   ▼
-Results Stored
-   │
-   ▼
-Answer Agent
-   │
-   ▼
-Final Output
-```
+Each step can access previous outputs using `input_keys`.
 
 ---
 
-# 6. Example Tool-Chain Use Cases
+## Answer Agent — Grounded Response Layer
 
-## File Analysis
+**Responsibilities**
+
+* Use only tool outputs
+* Avoid hallucination
+* Present structured user-friendly response
+
+---
+
+## Safety & Reliability Features
+
+* Planner tool usage disabled
+* SQL dangerous commands blocked
+* Code execution sandboxed (workspace)
+* Step failure handling
+* JSON plan validation
+* Retry logic for planner failures
+* Relative file paths for portability
+
+---
+
+## System Validation Tests
+
+### File Tool Test
 
 ```
-User: Analyze sales.csv
+Find sales.csv file
 ```
 
-Tools used:
+### Database Tool Test
 
 ```
-File Agent → find CSV
-Code Agent → analyze dataset
+Show first 2 rows from sales table
+```
+
+### Code Tool Test
+
+```
+Create csv with random numbers
+```
+
+### Multi-Tool Test
+
+```
+Analyze sales.csv and generate insights
 ```
 
 ---
 
-## Database Query
 
-```
-User: Show all sales records
-```
+## Final Status
 
-Tools used:
-
-```
-DB Agent → run SQL query
-```
+- Planner Routing Working
+- File Tool Working
+- DB Tool Working
+- Code Execution Working
+- Multi-Step Orchestration Successful
+- Grounded Answer Generation Enabled
 
 ---
 
-## File Creation
+## Project Outcome
 
-```
-User: Create file report.txt and write insights
-```
+A **functional multi-agent automation system** capable of:
 
-Tools used:
-
-```
-Code Agent → generate file
-```
-
----
-
-# 7. Project Directory Structure
-
-Example project layout:
-
-```
-Week9/
-│
-├── database/
-│   └── sample.db
-│
-├── src/
-│   ├── agents/
-│   ├── tools/
-│   │   ├── file_agent.py
-│   │   ├── db_agent.py
-│   │   └── code_executor.py
-│   │
-│   ├── data/
-│   │   └── sales.csv
-│   │
-│   ├── orchestrator.py
-│   └── main(day3).py
-```
+* File discovery
+* Database analytics
+* Python execution
+* Data pipeline automation
+* Insight generation
+* Autonomous task decomposition
 
 ---
-
-# 8. Advantages of Tool Chain Architecture
-
-Benefits:
-
-✔ Modular system
-✔ Scalable tool integration
-✔ Automatic tool selection
-✔ Multi-step reasoning
-✔ Real-world automation capability
-
----
-
-# 9. Future Extensions
-
-Possible improvements:
-
-Add tools for:
-
-```
-Web search
-Email sending
-API calls
-Vector databases
-Memory systems
-```
-
-This will transform the system into a **fully autonomous AI agent platform**.
-
----
-
-# 10. Summary
-
-The Tool Chain system allows the AI agent to:
-
-* Plan tasks
-* Select the correct tool
-* Execute multi-step workflows
-* Combine results into a final answer
-
-The architecture enables **real-world automation using AI agents**.

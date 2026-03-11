@@ -2,14 +2,17 @@
 
 ## Overview
 
-This project implements a multi-layer AI memory system designed for conversational agents.
-The system stores, retrieves, and updates user-related knowledge across sessions using a hybrid architecture.
+This project implements a **multi-layer cognitive memory system** for conversational AI agents.
 
-The memory system consists of three major components:
+The system enables the agent to:
 
-1. **Session Memory**
-2. **Vector Memory (Semantic Memory)**
-3. **Long-Term Memory (Persistent Database)**
+* Remember user facts across sessions
+* Perform semantic recall
+* Update / merge / delete memories intelligently
+* Maintain short-term conversational context
+* Persist structured knowledge in a database
+
+The architecture follows a **hybrid memory design** inspired by real agent frameworks (AutoGen, LangGraph, CrewAI).
 
 ---
 
@@ -19,47 +22,50 @@ The memory system consists of three major components:
 User Query
    │
    ▼
-Session Memory
+Session Memory (Short Term)
    │
    ▼
-Vector Search (FAISS)
+Vector Semantic Search (FAISS)
    │
    ▼
-Long-Term Memory (SQLite)
+Long Term Memory Fetch (SQLite)
    │
    ▼
-Context Injection into LLM
+Context Injection → LLM Response
+   │
+   ▼
+Fact Extraction → Memory Update
 ```
 
 ---
 
-# Components
+# Memory Layers
 
-## 1. Session Memory
+## 1. Session Memory (Short-Term Memory)
 
 File: `session_memory.py`
 
-Purpose:
+### Purpose
 
-* Stores the most recent conversation messages
-* Helps maintain short-term conversational context
+* Stores recent conversation messages
+* Maintains conversational continuity
+* Helps LLM understand dialogue flow
 
-Implementation:
+### Implementation
 
-* Uses a deque buffer
-* Default size: 20 messages
+* Uses `collections.deque`
+* Sliding window buffer (default size: 20 messages)
+* In-memory only (not persistent)
 
-Example:
+### Example
 
 ```
 User: Hi
 Agent: Hello!
 
-User: My name is Om
+User: I am Om Ji Dubey
 Agent: Nice to meet you
 ```
-
-Session memory ensures the agent remembers the current conversation flow.
 
 ---
 
@@ -67,192 +73,236 @@ Session memory ensures the agent remembers the current conversation flow.
 
 File: `vector_store.py`
 
-Purpose:
+### Purpose
 
-* Enables semantic search across stored memories.
-* Uses embeddings to retrieve relevant facts.
+* Enables semantic similarity search
+* Retrieves relevant memories even when wording differs
 
-Technology:
+### Technology
 
-* FAISS
-* Sentence Transformers (`all-MiniLM-L6-v2`)
+* FAISS IndexFlatIP
+* SentenceTransformers model: `all-MiniLM-L6-v2`
+* Cosine similarity via normalized embeddings
 
-Process:
+### Storage Files
 
 ```
-Fact
+vector.index        → FAISS index
+vector_meta.json    → ID + text mapping
+```
+
+### Flow
+
+```
+Fact Text
    ↓
 Embedding
    ↓
-FAISS Index
+Stored in FAISS
    ↓
-Similarity Search
+Similarity Search during retrieval
 ```
 
-Stored files:
+### Features
 
-```
-vector.index
-vector_meta.json
-```
-
-These files allow persistent semantic memory between sessions.
+* Persistent semantic index
+* Safe rebuild on delete
+* Backward-compatible metadata loading
+* String UUID memory IDs
+* Normalized vector scoring
 
 ---
 
-## 3. Long-Term Memory
+## 3. Long-Term Memory (Persistent Knowledge Store)
 
 File: `long_term_store.py`
 
-Purpose:
+Backend: `sqlite_lookup.py`
 
-* Stores extracted user facts permanently.
+### Purpose
 
-Database:
+* Stores structured user facts permanently
+* Supports identity memory and importance ranking
 
-* SQLite
+### Database
 
-Database file:
+SQLite database file:
 
 ```
 memory.db
 ```
 
-Table schema:
+### Table Schema
 
 ```
 memories
 ----------------------------
-id
-fact
-category
-importance
+id TEXT PRIMARY KEY
+fact TEXT
+category TEXT
+importance REAL
 ```
 
-Example stored facts:
+### Indexed Columns
+
+* category
+* importance
+
+### Example Stored Facts
 
 ```
-User's name is Om Ji Dubey
+User name is Om Ji Dubey
 User prefers Java programming
 User is a BTech CSE student
 ```
 
 ---
 
-# Fact Extraction
+# Fact Extraction Pipeline
 
-Facts are extracted using the LLM.
+Facts are extracted using an LLM summarization step.
 
-Process:
+### Flow
 
 ```
-Conversation
+Conversation Turn
    ↓
-LLM summarization
+LLM Prompt
    ↓
-Structured JSON facts
+Structured JSON Fact Output
 ```
 
-Example output:
+### Example Output
 
 ```
 [
   {
-    "fact": "User's name is Om Ji Dubey",
+    "fact": "User name is Om Ji Dubey",
     "category": "identity",
     "importance": 1.0
   }
 ]
 ```
 
+Only facts with **importance ≥ threshold** are stored.
+
 ---
 
-# Memory Reconciliation
+# Memory Reconciliation Engine
 
 File: `memory_manager.py`
 
-When a new fact appears, the system compares it with existing facts.
+When new facts are detected, the system compares them with existing semantic memories.
 
-Possible relations:
+### Possible Relations
 
 ```
-DUPLICATE
-CONTRADICTS
-UPDATES
-MERGEABLE
-UNRELATED
+DUPLICATE     → ignore
+CONTRADICTS   → replace old fact
+UPDATES       → replace old fact
+MERGEABLE     → combine facts
+UNRELATED     → store as new memory
 ```
 
-Example:
+### Example
 
 ```
 Old Fact: User lives in Delhi
 New Fact: User lives in Noida
 ```
 
-Relation: **UPDATES**
-
 Result:
 
 ```
-User lives in Noida
+Old memory deleted
+New memory stored
 ```
 
 ---
 
-# Memory Retrieval
+# Memory Retrieval Pipeline
 
 When the user asks a question:
 
 ```
 User Query
    ↓
-Vector Search
+Embedding
    ↓
-Fetch memory IDs
+FAISS similarity search
    ↓
-Retrieve facts from SQLite
+Memory IDs retrieved
    ↓
-Inject into prompt
+SQLite fact lookup
+   ↓
+Context injection into LLM
 ```
 
-Example:
+### Example
 
-User query:
+User:
 
 ```
-What is my name?
+Who am I?
 ```
 
 Retrieved memory:
 
 ```
-User's name is Om Ji Dubey
+User name is Om Ji Dubey
+```
+
+Agent Response:
+
+```
+You are Om Ji Dubey.
 ```
 
 ---
 
-# Data Flow
+# Data Storage Flow
 
 ```
 User Message
       │
       ▼
-Session Memory
+Session Memory (RAM)
       │
       ▼
-Fact Extraction (LLM)
+Fact Extraction (LLM reasoning)
       │
       ▼
-Vector Store
+Vector Store (semantic index)
       │
       ▼
-Long-Term SQLite Store
+SQLite Persistent Store
 ```
 
 ---
 
-# Files in Memory System
+# Memory ID Strategy
+
+* Uses **UUID string identifiers**
+* Prevents SQLite integer overflow
+* Compatible with FAISS metadata mapping
+* Ensures safe distributed scaling
+
+---
+
+# Key System Features
+
+* Persistent long-term memory across sessions
+* Semantic recall using embeddings
+* Intelligent memory reconciliation
+* Importance-based memory filtering
+* Identity memory fallback retrieval
+* Safe schema handling and migration awareness
+* Context-aware conversational responses
+* Hybrid short-term + long-term cognition
+
+---
+
+# Project Structure
 
 ```
 memory/
@@ -270,24 +320,27 @@ memory/
 
 ---
 
-# Key Features
+# Future Enhancements (Planned)
 
-* Persistent memory across sessions
-* Semantic memory retrieval
-* Duplicate fact detection
-* Memory reconciliation
-* Context-aware responses
+* Hybrid retrieval scoring (similarity + importance + recency)
+* Memory decay / forgetting mechanism
+* Episodic vs semantic memory separation
+* Background summarization worker
+* Context compression before LLM call
+* Multi-user namespace support
+* Conflict audit logs
+* Batch embedding pipeline
 
 ---
 
 # Conclusion
 
-This memory system provides a scalable architecture for AI agents to remember user information across conversations.
+This AI memory system provides a **scalable cognitive architecture** for conversational agents.
 
 By combining:
 
-* Session memory
-* Vector semantic memory
-* Persistent long-term storage
+* Short-term session memory
+* Semantic vector memory
+* Persistent structured storage
 
-the system enables intelligent, context-aware interactions.
+the agent achieves **human-like memory behaviour**, enabling intelligent, evolving, and context-aware interactions.
