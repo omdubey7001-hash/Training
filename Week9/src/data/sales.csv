@@ -1,0 +1,21 @@
+order_id,date,customer_id,category,product,quantity,unit_price,total_price,discount_percent,discount_amount,final_price,payment_method,region,sales_rep,status
+ORD2001,2025-01-02,CUST1001,Electronics,Wireless Mouse,3,25.50,76.50,10,7.65,68.85,Credit Card,North,Rahul Sharma,Completed
+ORD2002,2025-01-03,CUST1002,Electronics,Bluetooth Speaker,2,79.99,159.98,5,7.99,151.99,Debit Card,West,Amit Verma,Completed
+ORD2003,2025-01-05,CUST1003,Home & Garden,Table Lamp,4,34.75,139.00,0,0.00,139.00,PayPal,South,Neha Gupta,Completed
+ORD2004,2025-01-07,CUST1004,Books,Data Science Book,1,45.00,45.00,0,0.00,45.00,Credit Card,East,Sonal Mehta,Completed
+ORD2005,2025-01-08,CUST1005,Clothing,Men Hoodie,2,55.00,110.00,15,16.50,93.50,Debit Card,North,Rahul Sharma,Completed
+ORD2006,2025-01-10,CUST1006,Sports,Yoga Mat,5,22.99,114.95,5,5.75,109.20,UPI,Central,Amit Verma,Completed
+ORD2007,2025-01-12,CUST1007,Electronics,Laptop Stand,2,39.99,79.98,10,7.99,71.99,Credit Card,West,Neha Gupta,Completed
+ORD2008,2025-01-14,CUST1008,Clothing,Women Jacket,1,89.00,89.00,0,0.00,89.00,PayPal,East,Sonal Mehta,Completed
+ORD2009,2025-01-16,CUST1009,Books,AI Fundamentals,3,32.00,96.00,5,4.80,91.20,Credit Card,South,Rahul Sharma,Completed
+ORD2010,2025-01-18,CUST1010,Electronics,Mechanical Keyboard,2,120.00,240.00,10,24.00,216.00,Debit Card,North,Amit Verma,Completed
+ORD2011,2025-01-20,CUST1011,Home & Garden,Office Chair,1,199.99,199.99,10,20.00,179.99,Credit Card,West,Neha Gupta,Completed
+ORD2012,2025-01-22,CUST1012,Sports,Dumbbells Set,2,75.00,150.00,5,7.50,142.50,UPI,Central,Sonal Mehta,Completed
+ORD2013,2025-01-23,CUST1013,Clothing,Sports Shoes,3,65.00,195.00,0,0.00,195.00,Debit Card,East,Rahul Sharma,Completed
+ORD2014,2025-01-25,CUST1014,Electronics,Smartwatch,1,249.00,249.00,20,49.80,199.20,Credit Card,South,Amit Verma,Completed
+ORD2015,2025-01-26,CUST1015,Books,Python Programming,4,28.50,114.00,10,11.40,102.60,PayPal,West,Neha Gupta,Completed
+ORD2016,2025-01-28,CUST1016,Home & Garden,Plant Pot Set,3,18.99,56.97,5,2.85,54.12,Credit Card,North,Sonal Mehta,Completed
+ORD2017,2025-01-30,CUST1017,Electronics,Tablet,1,399.00,399.00,10,39.90,359.10,Debit Card,Central,Rahul Sharma,Completed
+ORD2018,2025-02-02,CUST1018,Sports,Running Shoes,2,85.00,170.00,5,8.50,161.50,UPI,South,Amit Verma,Completed
+ORD2019,2025-02-04,CUST1019,Clothing,T-Shirt Pack,5,12.00,60.00,0,0.00,60.00,Credit Card,East,Neha Gupta,Completed
+ORD2020,2025-02-06,CUST1020,Electronics,Noise Cancelling Headphones,1,299.00,299.00,10,29.90,269.10,Debit Card,West,Sonal Mehta,Completed
