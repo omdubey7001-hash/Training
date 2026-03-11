@@ -9,8 +9,6 @@ from autogen_agentchat.messages import ToolCallSummaryMessage
 from config.model_config import model_client
 
 
-# ---------- GLOBAL SINGLETON EXECUTOR ---------- #
-
 WORKSPACE = "workspace"
 
 os.makedirs(WORKSPACE, exist_ok=True)
@@ -22,8 +20,6 @@ _executor = LocalCommandLineCodeExecutor(
 
 _code_tool = PythonCodeExecutionTool(_executor)
 
-
-# ---------- GLOBAL SINGLETON AGENT ---------- #
 
 python_agent = AssistantAgent(
     name="PYTHON_EXECUTOR_AGENT",
@@ -39,8 +35,6 @@ python_agent = AssistantAgent(
     )
 )
 
-
-# ---------- RUN TASK ---------- #
 
 async def code_executor(task: str):
 

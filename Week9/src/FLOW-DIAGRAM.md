@@ -337,4 +337,4 @@ This forms the foundation for **autonomous AI agent systems**.
 
 ## To run
 
-python src/main\(day2\).py
+python src/day2_main.py

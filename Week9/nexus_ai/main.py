@@ -8,7 +8,6 @@ from nexus_ai.config import model_client
 from nexus_ai.orchestrator.master_orchestrator import MasterOrchestrator
 
 
-# ===== SAFE LOG PATH =====
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(BASE_DIR, "logs", "system.log")
 os.makedirs(os.path.dirname(LOG_FILE), exist_ok=True)

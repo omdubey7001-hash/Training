@@ -15,7 +15,7 @@ The system dynamically decomposes user tasks into executable steps and assigns t
 
 ---
 
-## ✨ Key Capabilities
+## Key Capabilities
 
 * Multi-Agent Orchestration
 * Dynamic DAG Execution Engine
@@ -29,7 +29,7 @@ The system dynamically decomposes user tasks into executable steps and assigns t
 
 ---
 
-## 🧠 Agents
+## Agents
 
 | Agent      | Responsibility                          |
 | ---------- | --------------------------------------- |
@@ -64,7 +64,7 @@ nexus_ai/
 
 ---
 
-## ▶️ Run the System
+## Run the System
 
 ```
 python -m nexus_ai.main
@@ -78,7 +78,7 @@ Design a RAG pipeline for 5k documents
 
 ---
 
-## 🧩 Future Enhancements
+## Future Enhancements
 
 * Tool-Aware Agent Execution
 * Self-Healing Retry Loop
@@ -87,8 +87,3 @@ Design a RAG pipeline for 5k documents
 * Multi-Model Routing
 
 ---
-
-## 👨‍💻 Author
-
-Om Ji Dubey
-Autonomous AI Systems Engineering Project

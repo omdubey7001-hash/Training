@@ -12,7 +12,7 @@ import os
 from dotenv import load_dotenv
 
 from autogen_ext.models.openai import OpenAIChatCompletionClient
-
+ 
 
 load_dotenv()
 

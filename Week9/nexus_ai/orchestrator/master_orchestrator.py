@@ -103,17 +103,14 @@ class MasterOrchestrator:
 
         log("task_received", {"task": user_task})
 
-        # ===== MEMORY =====
         context = self.memory.retrieve_context(user_task)
 
-        # ===== PLANNER =====
         plan = await self.planner.plan(user_task, context)
 
         log("plan_generated", {
             "steps": len(plan.get("steps", []))
         })
 
-        # ===== DAG EXECUTION =====
         step_outputs = await self.execute_dag(plan)
 
         combined_output = "\n\n".join(step_outputs.values())
@@ -122,7 +119,6 @@ class MasterOrchestrator:
             "steps_executed": len(step_outputs)
         })
 
-        # ===== REFLECTION =====
         critique = await self.critic.review(combined_output)
 
         improved_output = await self.optimizer.improve(
@@ -138,7 +134,6 @@ class MasterOrchestrator:
             validated_output
         )
 
-        # ===== MEMORY STORE =====
         await self.memory.store_interaction(
             user_task,
             final_report

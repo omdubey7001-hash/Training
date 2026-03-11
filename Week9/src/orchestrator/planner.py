@@ -41,7 +41,6 @@ Example:
 
 
 class DAGNode(BaseModel):
-
     id: str
     role: Literal["worker", "reflector", "validator"]
     task: str
@@ -49,10 +48,8 @@ class DAGNode(BaseModel):
 
     @field_validator("id")
     def validate_id(cls, v):
-
         if not v.strip():
             raise ValueError("id empty")
-
         return v
 
 
@@ -89,12 +86,51 @@ class Planner:
         for w in workers:
             w.deps = []
 
-        # reflector must depend on all workers
         for n in nodes:
             if n.role == "reflector":
                 n.deps = worker_ids
 
         return nodes
+
+    def show_execution_tree(self, nodes):
+
+        print("\nEXECUTION TREE\n")
+
+        children = {n.id: [] for n in nodes}
+
+        for n in nodes:
+            for d in n.deps:
+                children[d].append(n.id)
+
+        def dfs(node_id, level):
+            print("   " * level + "└── " + node_id)
+            for c in children[node_id]:
+                dfs(c, level + 1)
+
+        roots = [n.id for n in nodes if not n.deps]
+
+        for r in roots:
+            dfs(r, 0)
+
+
+    def draw_dag(self, nodes):
+        try:
+            from graphviz import Digraph
+        except:
+            print("Graphviz not installed")
+            return
+
+        dot = Digraph()
+
+        for n in nodes:
+            dot.node(n.id, f"{n.id}\n{n.role}")
+
+        for n in nodes:
+            for d in n.deps:
+                dot.edge(d, n.id)
+
+        dot.render("execution_dag", view=True)
+
 
     async def run(self, query):
 
@@ -104,6 +140,7 @@ class Planner:
 
         for n in nodes:
             print(f"{n.id} | role={n.role} | deps={n.deps} | task={n.task}")
+        self.show_execution_tree(nodes)
 
         results: Dict[str, str] = {}
 
@@ -163,9 +200,7 @@ class Planner:
             outputs = await asyncio.gather(*tasks)
 
             for node_id, output in outputs:
-
                 results[node_id] = output
-
                 del pending[node_id]
 
         final_node = next(n.id for n in nodes if n.role == "validator")

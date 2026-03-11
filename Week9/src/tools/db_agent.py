@@ -6,8 +6,6 @@ from autogen_agentchat.agents import AssistantAgent
 from autogen_core.tools import FunctionTool
 
 
-# ---------- SQL SAFETY ---------- #
-
 BLOCKED_SQL = re.compile(
     r"\b(UPDATE|DELETE|DROP|ALTER|TRUNCATE|ATTACH|DETACH|PRAGMA)\b",
     re.IGNORECASE
@@ -19,8 +17,6 @@ VALID_TABLE = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*$")
 
 MAX_RETURN_ROWS = 200
 
-
-# ---------- SQLITE HELPER ---------- #
 
 class SQLiteHelper:
 
@@ -132,8 +128,6 @@ class SQLiteHelper:
         finally:
             conn.close()
 
-
-# ---------- PROMPT ---------- #
 
 DB_AGENT_PROMPT = """
 You are a SQL database agent.

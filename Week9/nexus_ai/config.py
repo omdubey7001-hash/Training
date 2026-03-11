@@ -26,7 +26,7 @@ model_client = OpenAIChatCompletionClient(
 
     model_info=model_info,
 
-    temperature=0,
+    temperature=0.2,
     max_tokens=2000,
 
     timeout=60,
